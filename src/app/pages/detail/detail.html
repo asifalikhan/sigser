@@ -1,0 +1,73 @@
+<p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}"
+[(value)]="msgs">
+</p-growl>
+<div>
+<button (click)="backToTable()" class="btn btn-default btn-auth"><i class="ion-arrow-left-c" style="margin-right:5px"></i>Back</button>
+<button type="button" class="btn btn-danger" style="float:right" (click)="deleteUser()"><i class="ion-trash-a"></i>&nbsp; Delete&nbsp; </button>
+<button type="button" class="btn btn-warning" style="float:right;margin-right:5px;" (click)="viewUser()"><i class="ion-forward"></i>&nbsp; Profile&nbsp; </button>
+<br><br>
+</div>
+<div>
+    <br>
+    <form [formGroup]="updateForm" (ngSubmit)="onUpdateService(updateForm.value)" class="form-horizontal">
+      <div class="form-group row" [ngClass]="{'has-error': (!firstName.valid && firstName.touched), 'has-success': (firstName.valid && firstName.touched)}">
+        <label for="inputFirstname" class="col-sm-3 control-label">First Name</label>
+  
+        <div class="col-sm-9">
+          <input [formControl]="firstName" type="text" class="form-control" id="inputFirstname" placeholder="First Name">
+        </div>
+      </div>
+      <div class="form-group row" [ngClass]="{'has-error': (!lastName.valid && lastName.touched), 'has-success': (lastName.valid && lastName.touched)}">
+        <label for="inputLastname" class="col-sm-3 control-label">Last Name</label>
+  
+        <div class="col-sm-9">
+          <input [formControl]="lastName" type="text" class="form-control" id="inputLastname" placeholder="Last Name">
+        </div>
+      </div>
+  
+      <div class="form-group row" [ngClass]="{'has-error': (!username.valid && username.touched), 'has-success': (username.valid && username.touched)}">
+        <label for="username" class="col-sm-3 control-label">User Name</label>
+  
+        <div class="col-sm-9">
+          <input [formControl]="username" type="text" class="form-control" id="username" placeholder="User Name">
+        </div>
+      </div>
+      <div class="form-group row" [ngClass]="{'has-error': (!email.valid && email.touched), 'has-success': (email.valid && email.touched)}">
+        <label for="inputEmail" class="col-sm-3 control-label">Email</label>
+  
+        <div class="col-sm-9">
+          <input [formControl]="email" type="email" class="form-control" id="inputEmail" placeholder="Email">
+        </div>
+      </div>
+       <div class="form-group row" [ngClass]="{'has-error': (!rolesId.valid && rolesId.touched), 'has-success': (rolesId.valid && rolesId.touched)}">
+          <label for="rolesId" class="col-sm-3 control-label">Role</label>
+          <div class="col-sm-9">
+            <select [formControl]="rolesId" class="form-control" id="rolesId">
+                <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>  
+            </select>
+          </div>
+      </div> 
+      
+     <div class="form-group row" [ngClass]="{'has-error': (!groupsId.valid && groupsId.touched), 'has-success': (groupsId.valid && groupsId.touched)}">
+          <label for="groupsId" class="col-sm-3 control-label">Group Name</label>
+          <div class="col-sm-9">
+            <select [formControl]="groupsId" class="form-control" id="groupsId">
+                <option *ngFor="let group of groups" value="{{group.id}}">{{group.name}}</option>  
+            </select>
+          </div>
+      </div> 
+  
+<!--       <div class="form-group row" [ngClass]="{'has-error': (!batchesId.valid && batchesId.touched), 'has-success': (batchesId.valid && batchesId.touched)}">
+           <label for="batchesId" class="col-sm-3 control-label">Batch</label>
+           <div class="col-sm-9">
+             <select [formControl]="batchesId" class="form-control" id="batchesId">
+                 <option *ngFor="let batch of batches" value="{{batch.id}}">{{batch.batchCode}}</option>  
+             </select>
+           </div>
+       </div>  -->
+  
+      <div class="modal-footer">
+        <button [disabled]="!updateForm.valid" type="submit" class="btn btn-success"><i class="ion-checkmark" style="margin-right:5px"></i>Save User</button>
+      </div>
+    </form>
+  </div>

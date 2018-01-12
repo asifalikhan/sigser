@@ -1,0 +1,151 @@
+
+<div *ngIf="!staticAlertClosed" (close)="staticAlertClosed = true"></div>
+<hr/>
+<ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}
+</ngb-alert>
+<p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}"
+  [(value)]="msgs"></p-growl>
+
+<ngb-tabset *ngIf="!showSubmitForm">
+  <ngb-tab title="View All">
+    <ng-template ngbTabContent>
+      <div class="widgets">
+        <div class="row">
+          <ba-card baCardClass="with-scroll" class="smart-table-container">
+            <ng2-smart-table [settings]="settings" [source]="source" (edit)='submit($event)' (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+          </ba-card>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-tab>
+
+  <ngb-tab *ngIf="canManage" title="Add Assignment">
+    <ng-template ngbTabContent>
+      <form [formGroup]="form" (ngSubmit)="onSaveassignment(form.value)" class="form-horizontal">
+        
+        <div class="form-group row" [ngClass]="{'has-error': (!coursesId.valid && coursesId.touched), 'has-success': (coursesId.valid && coursesId.touched)}">
+          <label for="courseId" class="col-sm-2 control-label">Course</label>
+
+          <div class="col-sm-10">
+            <select formControlName="coursesId" class="form-control" id="coursesId">
+            <option *ngFor="let coursesId of teacherCourses" value={{coursesId.id}}>{{coursesId.title}}</option>  
+          </select></div>
+        </div>
+        <div class="form-group row" [ngClass]="{'has-error': (!assignmentTitle.valid && assignmentTitle.touched), 'has-success': (assignmentTitle.valid && assignmentTitle.touched)}">
+          <label for="assignmentTitle" class="col-sm-2 control-label">Title</label>
+
+          <div class="col-sm-10">
+            <input formControlName="assignmentTitle" type="text" class="form-control" id="assignmentTitle" placeholder="Title">
+          </div>
+        </div>
+        <div class="form-group row" [ngClass]="{'has-error': (!descreption.valid && descreption.touched), 'has-success': (descreption.valid && descreption.touched)}">
+          <label for="descreption" class="col-sm-2 control-label">Description</label>
+
+          <div class="col-sm-10">
+            <textarea formControlName="descreption" type="text" class="form-control" id="descreption" placeholder="Description"></textarea>
+          </div>
+        </div>
+        <div class="form-group row" [ngClass]="{'has-error': (!marks.valid && marks.touched), 'has-success': (marks.valid && marks.touched)}">
+          <label for="marks" class="col-sm-2 control-label">Marks</label>
+
+          <div class="col-sm-10">
+            <input formControlName="marks" type="number" class="form-control" id="marks" placeholder="Total Marks">
+          </div>
+        </div>
+        <div class="form-group row" [ngClass]="{'has-error': (!dueDate.valid && dueDate.touched), 'has-success': (dueDate.valid && dueDate.touched)}">
+          <label for="dueDate" class="col-sm-2 control-label">Due Date</label>
+
+          <div class="col-sm-10">
+            <input formControlName="dueDate" type="date" class="form-control" id="dueDate" placeholder="Due Date">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="uploadfile" class="col-sm-2 control-label">Upload File</label>
+  
+          <div class="col-sm-6">
+          <ba-file-uploader [fileUploaderOptions]="fileUploaderOptions" (change)="uploadAssignmentFile($event)"></ba-file-uploader>
+          </div>
+        </div>
+
+
+        <div class="form-group row">
+          <div class="offset-sm-2 col-sm-10">
+            <button [disabled]="!form.valid" type="submit" class="btn btn-default btn-auth">Save Assignment</button>
+          </div>
+        </div>
+      </form>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Submitted Assignments">
+      <ng-template ngbTabContent>
+        <div class="widgets">
+          <div class="row">
+            <ba-card baCardClass="with-scroll" class="smart-table-container">
+              <ng2-smart-table [settings]="submittedSettings" [source]="submittedSource" (edit)='checkAssignment($event)'></ng2-smart-table>
+            </ba-card>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+</ngb-tabset>
+<button *ngIf="showSubmitForm" (click)="back()" class="btn btn-default btn-auth"><i class="ion-arrow-left-c"></i>&nbsp; Back</button>
+<ba-card *ngIf="showSubmitForm && !showViewForm" >
+    
+    
+    <div  style="color: inherit;background-color: #114585;padding: 15px;margin: 10px 0;">
+      <h2 style="text-align: center;">{{assignment.assignmentTitle}}</h2>
+      <div *ngIf="!canManage" class="col-md-6" style="float:right;">
+          <ba-card title="Upload Assignmant" baCardClass="with-scroll">
+            <ba-file-uploader [fileUploaderOptions]="fileUploaderOptions" (change)="uploadAssignment($event)"></ba-file-uploader>
+            <button [disabled]="uploadDisable" class="btn btn-success" (click)="uploadFile()">submit</button>
+          </ba-card>
+        </div>
+      <div>
+          <h4>Course</h4>
+          <p>{{assignment.course.title}}</p>
+          
+          <h4>Descreption</h4>
+      </div>  
+      
+      <p class="col-md-6" style="margin: 15px 0;">{{assignment.descreption}}</p>
+      <h4>Instructor</h4>
+      <p>{{assignment.instructor}}</p>
+      <h4>Due Date</h4>
+      <p style="color:#76b328">{{assignment.dueDate}}</p>
+    </div>
+</ba-card>
+
+
+<ba-card *ngIf="showViewForm" >
+  <div  style="color: inherit;background-color: #282828;padding: 15px;margin: 10px 0;">
+    <h2 style="text-align: center;">{{assignment.title}}</h2>
+    <!-- <div *ngIf="!canManage" class="col-md-6" style="float:right;">
+        <ba-card title="Upload Again" baCardClass="with-scroll">
+          <ba-file-uploader [fileUploaderOptions]="fileUploaderOptions" (change)="uploadAssignment($event)"></ba-file-uploader>
+          <button [disabled]="uploadDisable" class="btn btn-warning" (click)="uploadFile()">over write</button>
+        </ba-card>
+      </div> -->
+    <div>
+    <div *ngIf="(!assignment.marks && canManage)" class="form-group row" class="col-sm-6" style="float:right" >
+      <label for="markss" class="col-sm-2 control-label">Marks</label>
+
+      <div class="col-sm-10">
+        <input type="number" class="form-control" placeholder="Give Marks" #mark>
+        <button class="btn btn-primary" style="float:right" (click)="onGradeAssignmnet(mark)" >grade</button>
+      </div>
+    </div>
+        <h4>Course</h4>
+        
+        <p>{{assignment.course.title}}</p>
+        <h4>Uploaded File</h4>
+        <a href={{fileHref}}>{{assignment.file}}</a>
+    </div>
+    
+    <!-- <p class="col-md-6" style="margin: 15px 0;">{{assignment.descreption}}</p> -->
+    <h4>Instructor</h4>
+    <p>{{assignment.instructor}}</p>
+    <h4>Submittions Date</h4>
+    <p style="color:#76b328">{{assignment.time}}</p>
+  </div>
+</ba-card>

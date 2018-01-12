@@ -1,0 +1,62 @@
+<div class="chat" [hidden]=isShown>
+  <div class="chat-header clearfix">
+    <img src={{img}} style="height:75px;width:75px;" alt="avatar" />
+
+    <div class="chat-about">
+      <div class="chat-with">{{name | uppercase}}<p>{{email}}</p></div>
+      <div style="display: inline-flex;" *ngFor="let user of groupUsers; let last = last;">
+          <p>{{user.firstName}} {{user.lastName}},&nbsp;</p>
+          <p *ngIf="last">me.</p> 
+      </div>
+      
+    </div>
+    <div *ngIf="isInitiator || id !== 'maingroupComponent'">
+      <button #audioBtn title="Audio Call" class="btn btn-info btn-circle btn-lg header-btn" type="button" (click)="openAudio()"><i class="fa fa-phone"></i></button>
+
+      <button #videoBtn title="Video Call" class="btn btn-info btn-circle btn-lg header-btn" type="button" (click)="openVideo()"><i class="fa fa-video-camera"></i></button>
+
+      <button #screenBtn title="Share Screen" class="btn btn-info btn-circle btn-lg header-btn" type="button" (click)="openScreen()"><i class="fa fa-desktop"></i></button>
+    </div>
+    <div *ngIf="isInitiator===false && id === 'maingroupComponent'">
+      <div class="joinerBtn">
+          <button #joinSessionBtn title="Join Session" class="btn btn-info btn-circle btn-lg header-btn" type="button" (click)="joinSession()" disabled><i class="fa fa-code-fork"></i></button>
+      </div>
+     
+    </div>
+  </div>
+
+  <div class="chat-fix.width">
+
+    <div #videoAudioDiv class="chat-history-other" hidden>
+
+      <ng-container class="space-bt-video" #videoAudioPlacedHere>
+      </ng-container>
+
+    </div>
+
+    <div #chatHistory class="chat-history">
+
+      <ul>
+
+        <ng-container #insideUL>
+        </ng-container>
+
+      </ul>
+
+    </div>
+  </div>
+
+  <div class="chat-message clearfix">
+    <textarea #messageToSend id="msgTag" [(ngModel)]="messageToSendContent" (keyup.enter)="render()" name="message-to-send" placeholder="Type your message"
+      rows="3">
+    
+    </textarea>
+    <!-- <i class="fa fa-paper-clip" (click)="selectFile()"></i> &nbsp;&nbsp;&nbsp; -->
+    <!-- <i class="fa fa-file-image-o"></i> -->
+
+    <!-- <button #sendButton (click)="render()">Send</button> -->
+    <button #sendButton title="Send" class="btn btn-info btn-circle btn-lg paper-plan" type="button" (click)="render()"><i class="fa fa-paper-plane"></i></button>
+    <button #selectfile title="attach file" class="btn btn-info btn-circle paper-clip" type="button" (click)="selectFile()"><i class="fa fa-paperclip"></i></button>
+  </div>
+
+</div>

@@ -1,0 +1,150 @@
+<p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}"
+  [(value)]="msgs">
+</p-growl>
+<div>
+  <button (click)="backToAll()" class="btn btn-default btn-auth"><i class="ion-arrow-left-c"></i>&nbsp; Back</button>
+  <button *ngIf="canJoin" id="joinButton" type="submit" (click)="joinCourse()" class="btn btn-success" style="float:right;"> <i class="fa fa-plus"></i>&nbsp;Join Course</button>
+  <button *ngIf="joined" (click)="leaveCourse()" class="btn btn-warning" style="float:right;"> <i class="fa fa-minus"></i>&nbsp;Leave Course</button>
+  <br><br>
+</div>
+
+<div class="row">
+  <div class="col-lg-12 col-sm-12 col-12">
+    <ba-card baCardClass="banner-column-panel">
+      <div class="banner">
+        <div class="large-banner-wrapper">
+          <img src="{{coursePic}}" alt="" />
+        </div>
+        <div class="banner-text-wrapper">
+          <div class="banner-text">
+            <h1>{{title}}</h1>
+            <p>{{description}}</p>
+            <div class="margin-set">
+                <ngb-rating [disabled]="disable" [(ngModel)]="rating"></ngb-rating>
+              </div> 
+          </div>
+        </div>
+      </div>
+    </ba-card>
+  </div>
+</div>
+<div class="col-md-12">
+  <div>
+    <ba-card title="What Will I Learn ?">
+      <ul>
+        <li *ngFor="let item of purpose"><i style="margin-right:20px" class="ion-checkmark"></i>{{item}}</li>
+      </ul>
+    </ba-card>
+  </div>
+</div>
+
+
+<div class="col-md-12">
+  <ba-card title="Requirements/Prerequisites">
+    <ul>
+      <li class="list" *ngFor="let requirement of requirements"><i style="margin-right:20px" class="ion-checkmark"></i>{{requirement}}</li>
+    </ul>
+  </ba-card>
+</div>
+<div class="col-md-12">
+  <ba-card title="Who is the target audience?">
+    <ul>
+      <li *ngFor="let audienc of audience"><i style="margin-right:20px" class="ion-checkmark"></i>{{audienc}}</li>
+    </ul>
+  </ba-card>
+</div>
+
+<div class="col-md-12">
+  <ba-card title= "Curriculums/Syllabus">
+    <ngb-accordion #acc="ngbAccordion">
+      <ngb-panel *ngFor="let curriculum of curriculums" title={{curriculum.title|uppercase}}>
+        <ng-template ngbPanelContent>
+          <div class="widgets">
+            <div class="row">
+              <ba-card title="Lectures" baCardClass="with-scroll" class="smart-table-container">
+                <ng2-smart-table [settings]="curriculumTableSettings" [source]="curriculum.lectures"></ng2-smart-table>
+              </ba-card>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </ba-card>
+</div>
+
+<ba-card *ngIf="joined" title="Course Files" baCardClass="with-scroll">
+    <div class="widgets">
+      <div class="row">
+        <ba-card baCardClass="with-scroll" class="smart-table-container">
+          <ng2-smart-table (userRowSelect)='onClickFile($event)'  [settings]="filesTableSettings" [source]="filesTableSource"></ng2-smart-table>
+        </ba-card>
+      </div>
+    </div>
+  </ba-card>
+
+<div class="col-md-12">
+  <ba-card title="About the Instructor">
+    <img align="left" class="small-profile-image" src={{instructorPic}}/>
+    <h3 style="margin:10px" (click)="instructorDetails()"><a routerLink="/pages/account/view_profile/{{teacherId}}">{{instructorName}}<!-- {{instructor.firstName}} {{instructor.lastName}} --></a></h3>
+    <h4 style="margin:10px">{{instructorInstitute}}
+    </h4>
+    <h4 style="margin:10px">{{instructorDesignation}} at {{instructorCompany}}
+    </h4>
+  </ba-card>
+</div>
+
+<div class="col-md-12">
+  <ba-card title="Created by">
+    <img align="left" class="small-profile-image" src={{creatorPic}}/>
+    <h3 style="margin:10px" (click)="instructorDetails()"><a routerLink="/pages/account/view_profile/{{creatorId}}">{{creatorName}}<!-- {{instructor.firstName}} {{instructor.lastName}} --></a></h3>
+    <h4 style="margin:10px">{{creatorInstitute}}</h4>
+    <h4 style="margin:10px">{{creatorDesignation}} at {{creatorCompany}}</h4>
+  </ba-card>
+</div>
+
+<ba-card title="Rate Course" baCardClass="with-scroll button-panel">
+    <div class="form-group">
+      <ngb-rating [formControl]="ctrl"></ngb-rating>
+      <br>
+      <div>
+          <br>
+        <button [disabled]="saved" class="btn btn-success" (click)="toggle()">
+          {{ ctrl.disabled ? "Saved" : "Save" }}
+        </button>
+      </div>
+      <div class="form-text small">
+        <div *ngIf="rated"><p>Thanks for Rating!</p></div>
+        <!--  <div *ngIf="ctrl.invalid" class="text-danger">Please rate </div> -->
+      </div>
+    </div>
+</ba-card>
+
+<div class="col-md-12">
+  <ba-card title="Comments">
+    <div class="col-md-12" class="form-group row" *ngFor="let comment of courseComments">
+      <div class="col-md-3">
+        <img align="left" class="small-comment-image" src={{profile_pic_url}}{{comment.profile_pic}}/>
+        <h4 style="margin:10px" (click)="instructorDetails()"><a routerLink="/pages/account/view_profile/{{comment.profilesId}}">@{{comment.username}}</a></h4>
+      </div>
+      <div class="col-md-9">
+        <h5>{{comment.comments}}</h5>
+        <br><hr>
+      </div>
+      
+    </div>
+    <br><hr>
+    <div class="col-md-12" class="form-group row">
+        <div class="col-md-3">
+            <label for="comment" class="control-label">Your Comment Here</label>
+        </div>
+        <div class="col-md-9">
+            <textarea class="form-control" #comment (keyup.enter)="saveComment(comment)"></textarea>
+            <br>
+            <button class="btn btn-success" (click)="saveComment(comment)">submit</button>
+        </div>
+      </div>
+    
+  </ba-card>
+</div>
+
+

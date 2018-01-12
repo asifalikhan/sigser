@@ -1,0 +1,120 @@
+<ngb-tabset>
+  <ngb-tab title="Organization Details">
+    <ng-template ngbTabContent><table class="table table-bordered">
+        <tbody><tr>
+            <td>name</td>
+            <td>
+                <strong class="dark">e-academy.herokuapp.com</strong>
+            </td>
+        </tr>
+        <tr>
+           <td>plan</td>
+           <td>
+               <strong class="dark">Free E-Academy</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>
+                <span class="label label-success">Active</span>
+              	<small style="margin-right: 5px; margin-left: 5px;">Expires on</small>
+                <strong class="dark">01 January 2030</strong>
+                <span class="push-left">
+                        <i (click)="upgrade()" class="reversed">Upgrade to Premium LMS</i>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td>rooms</td>
+            <td>
+                <strong class="dark">0 used</strong>
+                <small style="margin-left: 5px;">/1 total<a data-toggle="tooltip" data-placement="right" title="" style="margin-left: 5px;" 			data-original-title="Number of virtual rooms you can use simultaneously">
+                    <i class="fa fa-question-circle icon-question4"></i>
+                    </a>
+                </small>
+            </td>
+        </tr>
+        <tr>
+            <td>storage</td>
+            <td>
+                <small>0.5 GB total</small>
+            </td>
+        </tr>
+        <tr>
+            <td>user accounts</td>
+            <td>
+                <strong class="dark">1 used</strong>
+                <small style="margin-left: 5px;">/10 total</small>
+            </td>
+        </tr>
+        <tr>
+            <td>courses</td>
+            <td>
+                <strong class="dark">0 used</strong>
+                <small style="margin-left: 5px;">/5 total</small>
+            </td>
+        </tr>
+        <tr>
+            <td>lessons</td>
+            <td>
+                <small>10 total<a data-toggle="tooltip" data-placement="right" title="" style="margin-left: 5px;" data-original-title="The number of units that one online course can be split into.">
+                <i class="fa fa-question-circle icon-question4"></i>
+                </a>
+                </small>
+            </td>
+        </tr>
+    </tbody></table>
+      
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Storage Quotas">
+    <ng-template ngbTabContent>
+      <div class="total_storage push-bottom">
+    <h4 class="dashboard-title inline-block">
+        <strong>Storage 500MB&nbsp;</strong>
+    </h4>
+    <div class="progress storage-progress push-right" data-bar_for="total_storage">
+        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
+            <span class="sr-only">60% Complete</span>
+        </div>
+    </div>
+    50MB of 500MB used
+  </div>
+
+  <div class="users_list storage-users">
+    <form class="form-inline" id="storage_distribution" action="" method="post" data-total_amount="500">
+        <table border="1" class="table table-bordered">
+            <tbody>
+                                                        <tr class="user-quota">
+                        <td>
+                            <a href="/#/pages/account/profile" class="btn-link">
+                               <strong>User</strong>
+                            </a>
+                        </td>
+                        <td>Organization</td>
+                        <td>
+                            <div class="form-group no-wrap"> 
+                                <input class="form-control disabled" data-limit_source_for="user-13365" type="number" step="1" min="0" name="users_amount[13365]" id="user_amount[13365]" value="500" data-used_amount="0" data-role="Organization" disabled=""> MB                                
+                                <input type="hidden" name="users_role[13365]" value="Organization">
+                            </div>
+                        </td>
+                        <td class="no-wrap">
+                            <div class="progress storage-progress" data-bar_for="user-13365">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30px;">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </div>
+                                50MB of<span data-limit_for="user-13365">500MB</span>
+                                used                            
+                        </td>
+                    </tr>
+                            </tbody>
+        </table>
+        
+    </form><br>
+        <input type="button" class="save_btn btn btn-success" value="Update">
+</div>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
+

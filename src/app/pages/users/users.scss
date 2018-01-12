@@ -1,0 +1,169 @@
+@import '../../theme/sass/auth';
+@import "../../theme/sass/conf/conf";
+@import "../../services/alert";
+
+:host /deep/ .widgets {
+  .smart-table-container {
+    width: 100%;
+  }
+}
+
+:host /deep/ {
+  ng2-smart-table {
+    th, td {
+      border: 1px solid $border-light !important;
+      line-height: 35px;
+      vertical-align: middle;
+    }
+
+    table tr td {
+      padding: 0 8px;
+    }
+
+    color: $default-text;
+
+    input {
+      line-height: 1.5 !important;
+    }
+
+    ng2-smart-table-cell {
+      color: $default-text;
+      line-height: 35px;
+    }
+
+    tbody {
+      tr {
+        color: $default-text;
+      }
+      tr:hover {
+        background: rgba(0, 0, 0, 0.03);
+        cursor: pointer;
+      }
+    }
+
+    a.ng2-smart-sort-link {
+      font-size: 14px !important;
+      color: $default-text;
+      font-weight: $font-bolder;
+      &.sort {
+        font-weight: $font-bolder !important;
+
+        &::after {
+          border-bottom-color: $default-text !important;
+        }
+      }
+    }
+
+    .ng2-smart-actions {
+      width: 70px;
+      text-align: center;
+      .actions {
+        float: none;
+        text-align: center;
+      }
+    }
+
+    .ng2-smart-actions-title-add {
+      text-align: center;
+    }
+
+    a.ng2-smart-action, .ng2-smart-title {
+      font-size: 14px !important;
+      color: $default-text;
+      padding: 0 5px;
+      display: inline-block;
+
+      &.ng2-smart-action-add-add {
+        font-size: 25px !important;
+      }
+    }
+
+    nav.ng2-smart-pagination-nav {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+.modal-content{
+ // background-color: cornflowerblue;
+ background-image: url(/assets/img/blur-bg.jpg);
+  
+}
+
+#title{
+margin-left: 10px;
+}
+
+.close{
+  color: red; 
+}
+
+.mandatory{
+    color: #ff2346;
+}
+ /* 
+:host /deep/ .growl{
+    .ui-growl {
+      position:fixed;
+      top: 20px;
+      right: 20px;
+      width: 20em;
+      border-radius: 10px;
+    }
+
+    .ui-growl-item-container {
+      position:relative;
+      margin:0 0 10px 0;
+      opacity:0.95;
+      filter:alpha(opacity=95);
+    }
+
+    .ui-growl-item {
+        position: relative;
+      display: block;
+      padding: .5em 1em;
+    }
+
+    .ui-growl-item p {
+      padding: 0;
+      margin: 0;
+    }
+
+    .ui-growl-icon-close {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      cursor: pointer;
+    }
+
+    .ui-growl-title {
+      font-weight: bold;
+      padding: 0 0 .5em 0;
+      display: block;
+    }
+
+    .ui-growl-image {
+        position: absolute;
+        display: inline-block;
+        left: .5em;
+        top: .25em;
+        padding: 0;
+    }
+
+    .ui-growl-message {
+      padding: 0 0 .25em 0;
+        margin-left: 2.5em;
+    }
+
+    .ui-growl-message p {
+      font-weight: normal;
+    }
+    .ui-growl-message-error{
+      border-radius: 40px 10px;
+        background:  #EE2626;
+    }
+    .ui-growl-message-success{
+      border-radius: 40px 10px;
+        background: #73AD21;
+    } */

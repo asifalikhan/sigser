@@ -1,0 +1,135 @@
+<p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}"
+  [(value)]="msgs">
+
+</p-growl>
+
+
+<div *ngIf="!showUpdateForm">
+  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+          <i class="fa fa-plus"></i>&nbsp; 
+            Add Educations&nbsp; </button>
+  <br><br>
+</div>
+<div *ngIf="showUpdateForm">
+  <button (click)="backToTable()" class="btn btn-default"><i class="fa fa-long-arrow-left"></i>&nbsp;Back</button>
+  <br><br>
+</div>
+<!-- Modal -->
+<div  id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" style="margin:5px;">&times;</button>
+        <h4 class="modal-title" id="title"> Add Educations</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <form [formGroup]="educationInfoform" (ngSubmit)="onSaveEdu(educationInfoform.value)" class="form-horizontal">
+            <div class="form-group row" [ngClass]="{'has-error': (!institute.valid && institute.touched), 'has-success': (institute.valid && institute.touched)}">
+              <label for="institute" class="col-sm-2 control-label">Institute</label>
+              <div class="col-sm-10">
+                <input formControlName="institute" type="text" class="form-control" id="institute" placeholder="Institute">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!degree.valid && degree.touched), 'has-success': (degree.valid && degree.touched)}">
+              <label for="degree" class="col-sm-2 control-label">Degree</label>
+              <div class="col-sm-10">
+                <input formControlName="degree" type="text" class="form-control" id="degree" placeholder="Degree">
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': (!fieldOfStudy.valid && fieldOfStudy.touched), 'has-success': (fieldOfStudy.valid && fieldOfStudy.touched)}">
+              <label for="fieldOfStudy" class="col-sm-2 control-label">Field</label>
+              <div class="col-sm-10">
+                <input formControlName="fieldOfStudy" type="text" class="form-control" id="fieldOfStudy" placeholder="Field of study">
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': (!grade.valid && grade.touched), 'has-success': (grade.valid && grade.touched)}">
+              <label for="grade" class="col-sm-2 control-label">Grade</label>
+              <div class="col-sm-10">
+                <select formControlName="grade" class="form-control" id="grade" selected="grade" placeholder="Select your grade">
+                      <option *ngFor="let grade of grades">{{grade}}</option> 
+                    </select>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!cActivities.valid && cActivities.touched), 'has-success': (cActivities.valid && cActivities.touched)}">
+              <label for="cActivities" class="col-sm-2 control-label">Activities</label>
+              <div class="col-sm-10">
+                <input formControlName="cActivities" type="text" class="form-control" id="cActivities" placeholder="Extra Curricular Activities">
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': (!completionYear.valid && completionYear.touched), 'has-success': (completionYear.valid && completionYear.touched)}">
+              <label for="completionYear" class="col-sm-2 control-label">Year</label>
+              <div class="col-sm-10">
+                <input formControlName="completionYear" type="number" maxlength="4" class="form-control" id="completionYear" placeholder="Completation year">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="offset-sm-2 col-sm-3">
+                <button [disabled]="!educationInfoform.valid" type="submit" class="btn btn-success btn-icon">Save Education</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="widgets" *ngIf="!showUpdateForm">
+  <div class="row">
+    <ba-card baCardClass="with-scroll" class="smart-table-container">
+      <ng2-smart-table [settings]="settings" (userRowSelect)='onEdit($event)' [source]="source" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+    </ba-card>
+  </div>
+</div>
+<form *ngIf="showUpdateForm" [formGroup]="educationUpdateform" (ngSubmit)="onUpdateEdu(educationUpdateform.value)" class="form-horizontal">
+  <div class="form-group row" [ngClass]="{'has-error': (!institute.valid && institute.touched), 'has-success': (institute.valid && institute.touched)}">
+    <label for="institute" class="col-sm-2 control-label">Institute</label>
+    <div class="col-sm-10">
+      <input formControlName="institute" type="text" class="form-control" id="institute" placeholder="Institute">
+    </div>
+  </div>
+  <div class="form-group row" [ngClass]="{'has-error': (!degree.valid && degree.touched), 'has-success': (degree.valid && degree.touched)}">
+    <label for="degree" class="col-sm-2 control-label">Degree</label>
+    <div class="col-sm-10">
+      <input formControlName="degree" type="text" class="form-control" id="degree" placeholder="Degree">
+    </div>
+  </div>
+
+  <div class="form-group row" [ngClass]="{'has-error': (!fieldOfStudy.valid && fieldOfStudy.touched), 'has-success': (fieldOfStudy.valid && fieldOfStudy.touched)}">
+    <label for="fieldOfStudy" class="col-sm-2 control-label">Field of study</label>
+    <div class="col-sm-10">
+      <input formControlName="fieldOfStudy" type="text" class="form-control" id="fieldOfStudy" placeholder="Field of study">
+    </div>
+  </div>
+
+  <div class="form-group row" [ngClass]="{'has-error': (!grade.valid && grade.touched), 'has-success': (grade.valid && grade.touched)}">
+    <label for="grade" class="col-sm-2 control-label">Grade</label>
+    <div class="col-sm-10">
+      <input formControlName="grade" type="text" class="form-control" id="grade" placeholder="Grade">
+    </div>
+  </div>
+  <div class="form-group row" [ngClass]="{'has-error': (!cActivities.valid && cActivities.touched), 'has-success': (cActivities.valid && cActivities.touched)}">
+    <label for="cActivities" class="col-sm-2 control-label">Activities</label>
+    <div class="col-sm-10">
+      <input formControlName="cActivities" type="text" class="form-control" id="cActivities" placeholder="Extra Curricular Activities">
+    </div>
+  </div>
+
+  <div class="form-group row" [ngClass]="{'has-error': (!completionYear.valid && completionYear.touched), 'has-success': (completionYear.valid && completionYear.touched)}">
+    <label for="completionYear" class="col-sm-2 control-label">Completation year</label>
+    <div class="col-sm-10">
+      <input formControlName="completionYear" type="text" class="form-control" id="completionYear" placeholder="Completation year">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="offset-sm-2 col-sm-3">
+      <button [disabled]="!educationUpdateform.valid" type="submit" class="btn btn-success btn-icon">Save Changes</button>
+    </div>
+  </div>
+</form>

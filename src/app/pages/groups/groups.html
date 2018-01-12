@@ -1,0 +1,115 @@
+<div *ngIf="!viewData">
+  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+    <i class="fa fa-plus"></i>&nbsp; 
+      Create Groups&nbsp; </button>
+  <br><br>
+</div>
+
+<!--   <ul [dragula]='"bag-items"'>
+    <li *ngFor="let item of items"></li>
+  </ul> -->
+
+<p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}"
+  [(value)]="msgs"></p-growl>
+<div *ngIf="viewData">
+  <button (click)="backToTable()" class="btn btn-default btn-auth"><i class="ion-arrow-left-c" style="margin-right:5px"></i>Back</button>
+  <br><br>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="title"> Create Groups</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <form [formGroup]="groupsForm" (ngSubmit)="onSaveGroup(groupsForm.value)" class="form-horizontal">
+            <div class="form-group row" [ngClass]="{'has-error': (!name.valid && name.touched), 'has-success': (name.valid && name.touched)}">
+              <label for="name" class="col-sm-2 control-label">Name</label>
+
+              <div class="col-sm-10">
+                <input [formControl]="name" type="text" class="form-control" id="name" placeholder="Group Name">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!discription.valid && discription.touched), 'has-success': (discription.valid && discription.touched)}">
+              <label for="discription" class="col-sm-2 control-label">Discription</label>
+
+              <div class="col-sm-10">
+                <textarea formControlName="discription" type="text" class="form-control" id="discription" placeholder="Group Discription"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button [disabled]="!groupsForm.valid" type="submit" class="btn btn-default btn-auth">Create Group</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="widgets" *ngIf="!viewData">
+  <div class="row">
+    <ba-card baCardClass="with-scroll" class="smart-table-container">
+      <ng2-smart-table [settings]="settings" (custom)="onCustom($event)" (userRowSelect)='onEdit($event)' [source]="source" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+    </ba-card>
+  </div>
+</div>
+<div *ngIf="viewData" class="form-group row">
+  <br>
+  <ba-card class="offset-sm-1 col-sm-9">
+    <form [formGroup]="updateForm" (ngSubmit)="onUpdateService(updateForm.value)" class="form-horizontal">
+      <div class="form-group row" [ngClass]="{'has-error': (!name2.valid && name2.touched), 'has-success': (name2.valid && name2.touched)}">
+        <label for="name2" class="col-sm-2 control-label">Name</label>
+
+        <div class="col-sm-10">
+          <input [formControl]="name2" type="text" class="form-control" id="name2" placeholder="Group Name">
+        </div>
+      </div>
+      <div class="form-group row" [ngClass]="{'has-error': (!discription2.valid && discription2.touched), 'has-success': (discription2.valid && discription2.touched)}">
+        <label for="discription2" class="col-sm-2 control-label">Discription</label>
+
+        <div class="col-sm-10">
+          <textarea [formControl]="discription2" type="text" class="form-control" id="discription2" placeholder="Group Discription"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 control-label">Services</label>
+        <div class="col-sm-5">
+          <ba-card>
+            <div droppable (onDrop)="onRemoveService($event)" style="overflow-y: scroll; height: 200px;" title="All Services">
+              <p>All Service</p>
+              <ul class="list-group">
+                <li draggable *ngFor="let item of services" [dragData]="item" class="list-group-item">{{item.title}}</li>
+              </ul>
+            </div>
+          </ba-card>
+        </div>
+        <div class="col-sm-5">
+          <ba-card>
+            <div class="panel panel-default" droppable (onDrop)="onAddService($event)" style="overflow-y: scroll; height: 200px;" title="Group Services">
+              <div class="panel-body" data-text="Enter text here">
+                <p>Group Service</p>
+                <li draggable *ngFor="let item of groupServices" [dragData]="item" class="list-group-item">{{item.title}}</li>
+              </div>
+            </div>
+          </ba-card>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="offset-sm-9 col-sm-9">
+          <button [disabled]="!updateForm.valid" type="submit" class="btn btn-success"><i class="ion-checkmark" style="margin-right:5px"></i>Save Changes</button>
+        </div>
+      </div>
+
+    </form>
+  </ba-card>
+</div>
+<!-- <div *ngIf="loadingGS">
+                      <div class="loader"><div class="loader2"><div class="loader3"></div></div></div>
+                  </div> -->

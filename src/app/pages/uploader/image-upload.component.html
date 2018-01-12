@@ -1,0 +1,27 @@
+<div class="form-group image-upload-wrapper">
+    <label>{{label}}</label>
+    <span class="uploading" *ngIf="uploading"></span>
+    <div *ngIf="files.length < limit">
+      <input [hidden]="files.length > limit" #fileInput (change)="onFileChange(fileInput)" type="file" id="{{elementId}}"
+             [multiple]="false" accept="image/*">
+      <p class="help-block">{{description}}.</p>
+    </div>
+  
+    <p *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</p>
+    <ul *ngIf="files.length" class="uploaded-images">
+      <li *ngFor="let file of files; let i = index">
+        <img width="50" height="50" src='{{ fileService.getFileUrl(file.name) }}' alt=""/>
+        <span title="Delete" (click)="onDeleteFile(i)" class="delete"><i class="fa fa-trash"></i></span>
+      </li>
+    </ul>
+  
+  
+  </div>
+
+<!-- For file upload in an other component copy this div in it -->
+<!--   <div class="form-group">
+    <label id="post-images">Image</label>
+    <image-upload [value]="images" [description]="'Image file only.'" [elementId]="'post-images'" [limit]="5"
+                  [multiple]="false" (onUpload)="onImageUpload($event)"
+                  (onDelete)="onImageDelete($event)"></image-upload>
+  </div> -->

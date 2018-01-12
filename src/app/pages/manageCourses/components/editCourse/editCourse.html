@@ -1,0 +1,159 @@
+<p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}"
+  [(value)]="msgs">
+
+
+
+</p-growl>
+<div>
+  <button (click)="backToAll(updateForm.value)" class="btn btn-default btn-auth"><i class="ion-arrow-left-c"></i>&nbsp; Back&nbsp; </button>
+  <button type="button" class="btn btn-danger" style="float:right" (click)="deleteCourse()"><i class="ion-trash-a"></i>&nbsp; Delete&nbsp; </button>
+  <div class="fileUpload btn btn-primary" style="float:right;margin-right:5px;">
+    <span><i class="ion-archive"></i>&nbsp; Upload Image</span>
+    <input type="file" class="upload" (change)="uploadCoursePic($event)" />
+  </div>
+
+  <br><br>
+</div>
+
+<form [formGroup]="updateForm" class="form-horizontal">
+
+  <ba-card title="Course Title">
+    <div class="form-group row" [ngClass]="{'has-error': (!title.valid && title.touched), 'has-success': (title.valid && title.touched)}">
+      <input [formControl]="title" type="text" class="form-control" id="title" placeholder="Course title">
+    </div>
+  </ba-card>
+
+  <ba-card title="Description">
+    <div class="form-group row" [ngClass]="{'has-error': (!description.valid && description.touched), 'has-success': (description.valid && description.touched)}">
+      <textarea [formControl]="description" type="text" class="form-control" id="description" placeholder="Cradit Hours"></textarea>
+    </div>
+  </ba-card>
+
+  <ba-card title="Purpose of Course">
+    <textarea class="col-sm-4" class="form-control" placeholder="What will they learn?" #purpose [ngClass]="{'has-error': (!purpose.valid && purpose.touched), 'has-success': (purpose.valid && purpose.touched)}"></textarea>
+    <br>
+    <button type="button" class="btn btn-success" (click)="newPurpose(purpose)">
+            <span class="fa fa-plus"></span>Add
+          </button>
+    <hr>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let item of purposes" style="background:rgba(0, 0, 0, 0.0)"> {{item}}
+        <button class="btn btn-default ion-close" style="float:right;margin-left:10px" (click)=deletePurpose(item)></button>
+      </li>
+    </ul>
+  </ba-card>
+
+  <ba-card title="Requirements/Prerequisite">
+    <textarea class="form-control" placeholder="What is require or prerequisite?" #requirement [ngClass]="{'has-error': (!requirements.valid && requirements.touched), 'has-success': (requirements.valid && requirements.touched)}"></textarea>
+    <br>
+    <button type="button" class="btn btn-success" (click)="newRequirement(requirement)">
+          <span class="fa fa-plus"></span>Add
+        </button>
+    <hr>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let item of requirementss" style="background:rgba(0, 0, 0, 0.0)"> {{item}}
+        <button class="btn btn-default ion-close" style="float:right;margin-left:10px" (click)=deleteRequirement(item)></button>
+      </li>
+    </ul>
+  </ba-card>
+
+  <ba-card title="Target Audience">
+    <textarea class="form-control" placeholder="Who are the target audience?" #audience [ngClass]="{'has-error': (!audience.valid && audience.touched), 'has-success': (audience.valid && audience.touched)}"></textarea>
+    <br>
+    <button type="button" class="btn btn-success" (click)="newAudience(audience)">
+            <span class="fa fa-plus"></span>Add
+          </button>
+    <hr>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let item of audiences" style="background:rgba(0, 0, 0, 0.0)"> {{item}}
+        <button class="btn btn-default ion-close" style="float:right;margin-left:10px" (click)=deleteAudience(item)></button>
+      </li>
+    </ul>
+  </ba-card>
+
+  <ba-card title="Set Instructor">
+    <div class="form-group row">
+      <div class="col-sm-4" [ngClass]="{'has-error': (!instructorsId.valid && instructorsId.touched), 'has-success': (instructorsId.valid && instructorsId.touched)}">
+        <select formControlName="instructorsId" class="form-control" id="instructorsName">
+            <option [disabled]="!canChangeInstructor" *ngFor="let instructorsId of instructorNames" value={{instructorsId.id}}>{{instructorsId.firstName}} {{instructorsId.lastName}}</option>  
+          </select>
+      </div>
+    </div>
+  </ba-card>
+</form>
+<ba-card title="Course Files" baCardClass="with-scroll">
+  <ba-file-uploader [fileUploaderOptions]="fileUploaderOptions" (change)="uploadCourseFile($event)"></ba-file-uploader>
+  
+  <div class="widgets">
+    <div class="row">
+      <ba-card baCardClass="with-scroll" class="smart-table-container">
+        <ng2-smart-table (userRowSelect)='onClickFile($event)' [settings]="filesTableSettings" [source]="filesTableSource" (deleteConfirm)="deletefile($event)"></ng2-smart-table>
+      </ba-card>
+    </div>
+  </div>
+<!--   <pdf-viewer *ngIf="pdf_File" [src]="pdfSrc" [render-text]="true" style="display: block;" [stick-to-page]="true" [external-link-target]="'blank'"></pdf-viewer>
+<iframe *ngIf="docx_File" src="{{fileHref}}"></iframe> -->
+</ba-card>
+
+<ba-card title="Curriculums/Syllabus">
+
+  <div class="form-group row">
+    <label class="col-sm-2 control-label">Title</label>
+
+    <div class="col-sm-10">
+      <input [(ngModel)]="CurriculumTitle" type="text" class="form-control" placeholder="Curriculum Title">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 control-label">Lectures</label>
+
+    <div class="col-sm-10">
+      <ba-card>
+        <div class="form-group row">
+          <label class="col-sm-2 control-label">Title</label>
+
+          <div class="col-sm-10">
+            <input [(ngModel)]="Lecturetitle" type="text" class="form-control" placeholder="Lecture Title">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 control-label">Intro</label>
+
+          <div class="col-sm-10">
+            <textarea [(ngModel)]="Lectureintro" type="text" class="form-control" placeholder="Lecture Introduction"></textarea>
+          </div>
+        </div>
+      </ba-card>
+
+      <button class="btn btn-default" (click)="addLecture()">Add Lecture</button>
+      <hr>
+      <div *ngIf="showLectureTable" class="widgets">
+        <div class="row">
+          <ba-card title="Lectures" baCardClass="with-scroll" class="smart-table-container">
+            <ng2-smart-table [settings]="curriculumTableSettings" [source]="curriculumTableSource" (editConfirm)='onUpdateLecture($event)'
+              (deleteConfirm)="deleteLecture($event)"></ng2-smart-table>
+          </ba-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-default" (click)="addCurriculum()">Add Curriculum</button>
+  <hr>
+  <ngb-accordion #acc="ngbAccordion">
+    <ngb-panel *ngFor="let curriculum of curriculums" title={{curriculum.title|uppercase}}>
+      <ng-template ngbPanelContent>
+        <button class="btn btn-danger" style="margin-bottom:10px" (click)=deleteCurriculum(curriculum)>Delete Curriculum</button>
+        <div class="widgets">
+          <div class="row">
+            <ba-card title="Lectures" baCardClass="with-scroll" class="smart-table-container">
+              <ng2-smart-table [settings]="curriculumTableSettings" [source]="curriculum.lectures" (deleteConfirm)="deleteCurriculumLecture($event,curriculum)"
+                (editConfirm)="onUpdateCurriculumLecture($event)"></ng2-smart-table>
+            </ba-card>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+
+</ba-card>
+<button [disabled]="!updateForm.valid" style="float:right;" (click)="onUpdateCourse(updateForm.value)" class="btn btn-success">Update Course</button>

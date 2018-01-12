@@ -1,0 +1,117 @@
+:host /deep/ .growl{
+    .ui-growl {
+      position:fixed;
+      z-index: 1005 !important;
+      top: 20px;
+      right: 20px;
+      width: 20em;
+      border-radius: 10px;
+      
+    }
+
+    .ui-growl-item-container {
+      z-index: 1005;
+      position:relative;
+      margin:0 0 10px 0;
+      opacity:0.95;
+      filter:alpha(opacity=95);
+    }
+
+    .ui-growl-item {
+        position: relative;
+        z-index: 1005;
+      display: block;
+      padding: .5em 1em;
+      color: #ffffff;
+    }
+
+    .ui-growl-item p {
+      padding: 0;
+      margin: 0;
+      color: #ffffff;
+    }
+
+    .ui-growl-icon-close {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      cursor: pointer;
+      color: #ffffff;
+    }
+
+    .ui-growl-title {
+      font-weight: bold;
+      padding: 0 0 .5em 0;
+      display: block;
+      color: #ffffff;
+    }
+
+    .ui-growl-image {
+        position: absolute;
+        z-index: 1005;
+        display: inline-block;
+        left: .5em;
+        top: .25em;
+        padding: 0;
+    }
+
+    .ui-growl-message {
+      z-index: 1005;
+      padding: 0 0 .25em 0;
+        margin-left: 2.5em;
+    }
+
+    .ui-growl-message p {
+      z-index: 1005;
+      font-weight: normal;
+    }
+    .ui-growl-message-error{
+      z-index: 1005;
+      border-radius: 40px 10px;
+        background:  #d64242;//#EE2626
+        border-color: #d64242;
+    }
+    .ui-growl-message-success{
+      z-index: 1005;
+      border-radius: 40px 10px;
+        background: #73AD21;
+        border-color: #73AD21;
+    }    
+    .ui-growl-message-info{
+      z-index: 1005;
+      border-radius: 40px 10px;
+        background: teal;
+        border-color: teal;
+    }
+}
+
+h4 {
+  font-size:18px;
+  font-weight:bold;
+  
+}
+.fa-spin-custom, .glyphicon-spin {
+  margin-right: 5px;
+  -webkit-animation: spin 1000ms infinite linear;
+  animation: spin 1000ms infinite linear;
+}
+@-webkit-keyframes spin {
+  0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+  }
+  100% {
+      -webkit-transform: rotate(359deg);
+      transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+  }
+  100% {
+      -webkit-transform: rotate(359deg);
+      transform: rotate(359deg);
+  }
+}

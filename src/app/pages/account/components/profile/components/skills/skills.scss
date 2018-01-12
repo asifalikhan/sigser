@@ -1,0 +1,15 @@
+@import "../../../../../../../../node_modules/ng2-tag-input/dist/modules/components/tag-input/tag-input.style.scss";
+
+.modal-content{
+    // background-color: cornflowerblue;
+    background-image: url(/assets/img/blur-bg.jpg);
+     
+   }
+
+   :host /deep/ .me {
+    //background-color: #00C7FF !important;
+}
+
+$tag-color: #222;
+$tag-border-radius: 100px;
+$color-primary-default: #000;

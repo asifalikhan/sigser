@@ -1,0 +1,59 @@
+
+
+<p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}" [(value)]="msgs"></p-growl>
+
+<div>
+  <button (click)="backToTable()" class="btn btn-default btn-auth"><i class="ion-arrow-left-c" style="margin-right:5px"></i>Back</button>
+  <button type="button" class="btn btn-danger" style="float:right" (click)="deleteBatch()"><i class="fa fa-minus"></i>&nbsp; Delete&nbsp; </button>
+<br><br>
+</div>
+  
+  <ba-card class="offset-sm-3 col-sm-9">
+    <br>
+      <form [formGroup]="updateForm" (ngSubmit)="onUpdateBatch(updateForm.value)" class="form-horizontal">
+        <div class="form-group row" [ngClass]="{'has-error': (!name.valid && name.touched), 'has-success': (name.valid && name.touched)}">
+          <label for="name" class="col-sm-2 control-label">Batch name</label>
+  
+          <div class="col-sm-10">
+            <input [formControl]="name" type="text" class="form-control" id="name" >
+          </div>
+        </div>
+        <div class="form-group row" [ngClass]="{'has-error': (!batchCode.valid && batchCode.touched), 'has-success': (batchCode.valid && batchCode.touched)}">
+          <label for="batchCode" class="col-sm-2 control-label">Batch Code</label>
+        
+          <div class="col-sm-10">
+            <input [formControl]="batchCode" type="text" class="form-control" id="batchCode">
+          </div>
+        </div>
+        <div class="form-group row" [ngClass]="{'has-error': (!startDate.valid && startDate.touched), 'has-success': (startDate.valid && startDate.touched)}">
+          <label for="startDate" class="col-sm-2 control-label">Start Date</label>
+        
+          <div class="col-sm-10">
+            <input [formControl]="startDate" type="date" class="form-control" id="startDate" >
+          </div>
+        </div>
+        <div class="form-group row" [ngClass]="{'has-error': (!endDate.valid && endDate.touched), 'has-success': (endDate.valid && endDate.touched)}">
+          <label for="endDate" class="col-sm-2 control-label">End Date</label>
+        
+          <div class="col-sm-10">
+            <input [formControl]="endDate" type="date" class="form-control" id="endDate" >
+          </div>
+        </div>
+
+        <div class="offset-sm-10 col-sm-2">
+          <button [disabled]="!updateForm.valid" type="submit" class="btn btn-success">Update Batch</button>
+        </div>
+      </form>
+
+
+    <br>
+    <br>
+    <br>
+    <div class="widgets">
+      <div class="row">
+        <ba-card  baCardClass="with-scroll" class="smart-table-container">
+           <ng2-smart-table [settings]="settings" (editConfirm)='onUpdate($event)' (userRowSelect)='onEdit($event)' [source]="source"  (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table> 
+        </ba-card>
+      </div>
+    </div>
+  </ba-card>

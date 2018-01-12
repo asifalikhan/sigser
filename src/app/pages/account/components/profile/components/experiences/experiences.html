@@ -1,0 +1,131 @@
+      
+      
+      <p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}" [(value)]="msgs"></p-growl>
+      
+
+      <div *ngIf="!showUpdateForm">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+          <i class="fa fa-plus"></i>&nbsp; 
+            Add Experiences&nbsp; </button>
+          <br><br>
+      </div>
+      <div *ngIf="showUpdateForm">
+          <button (click)="backToTable()" class="btn btn-default"><i class="fa fa-long-arrow-left"></i>&nbsp;Back</button>
+          <br><br>
+        </div>
+      <!-- Modal -->
+      <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title" id="title">  Add Experiences</h4>
+            </div>
+            <div class="modal-body">
+              <div>
+                  <form *ngIf="!showUpdateForm" [formGroup]="experienceInfoform" (ngSubmit)="onSaveExp(experienceInfoform.value)" class="form-horizontal">
+                    <div class="form-group row" [ngClass]="{'has-error': (!designation.valid && designation.touched), 'has-success': (designation.valid && designation.touched)}">
+                     <label for="designation" class="col-sm-3 control-label">Designation</label>
+                     <div class="col-sm-9">
+                       <input formControlName="designation" type="text" class="form-control" id="designation" placeholder="designation"/>
+                     </div>
+                   </div>
+             
+                   <div class="form-group row" [ngClass]="{'has-error': (!company.valid && company.touched), 'has-success': (company.valid && company.touched)}">
+                     <label for="company" class="col-sm-3 control-label">Company</label>
+                     <div class="col-sm-9">
+                       <input formControlName="company" type="text" class="form-control" id="company" placeholder="Company or Institute">
+                     </div>
+                   </div>
+             
+                   <div class="form-group row" [ngClass]="{'has-error': (!address.valid && address.touched), 'has-success': (address.valid && address.touched)}">
+                     <label for="address" class="col-sm-3 control-label">Address</label>
+                     <div class="col-sm-9">
+                       <textarea formControlName="address" type="text" class="form-control" id="address" placeholder="Address"></textarea>
+                     </div>
+                   </div>
+                   <div class="form-group row" [ngClass]="{'has-error': (!fromDate.valid && fromDate.touched), 'has-success': (fromDate.valid && fromDate.touched)}">
+                     <label for="fromDate" class="col-sm-3 control-label">From Date</label>
+                     <div class="col-sm-9">
+                       <input formControlName="fromDate" type="date" class="form-control" id="fromDate" placeholder="From Date">
+                     </div>
+                   </div>
+                   <div class="form-group row" [ngClass]="{'has-error': (!currentlyWorking.valid && currentlyWorking.touched), 'has-success': (currentlyWorking.valid && currentlyWorking.touched)}">
+                     <label for="currentlyWorking" class="col-sm-3 control-label">Working</label>
+                     <div class="col-sm-2">
+                       <input formControlName="currentlyWorking"  (click)="hideToDate()" type="checkBox" value="true" class="form-control" id="toDate" placeholder="Is Current Working">
+                     </div>
+                   </div>
+                   <div class="form-group row" *ngIf="!currentlyWorkingCheck">
+                     <label for="toDate" class="col-sm-3 control-label">To Date</label>
+                     <div class="col-sm-9">
+                       <input formControlName="toDate" type="date" class="form-control" id="toDate" placeholder="To Date">
+                     </div>
+                   </div>
+                    <div class="form-group row">
+                      <div class="offset-sm-3 col-sm-3">
+                          <button [disabled]="!experienceInfoform.valid" type="submit" class="btn btn-success btn-icon">Save Experience</button>
+                      </div>
+                    </div>
+                 </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <div class="widgets" *ngIf="!showUpdateForm">
+        <div class="row">
+          <ba-card  baCardClass="with-scroll" class="smart-table-container">
+            <ng2-smart-table [settings]="settings" (deleteConfirm)="onDeleteConfirm($event)" (userRowSelect)='onEdit($event)' [source]="source" ></ng2-smart-table> 
+          </ba-card>
+        </div>
+      </div> 
+      <form *ngIf="showUpdateForm" [formGroup]="experienceUpdateform" (ngSubmit)="onUpdateExp(experienceUpdateform.value)" class="form-horizontal">
+        <div class="form-group row" [ngClass]="{'has-error': (!designation.valid && designation.touched), 'has-success': (designation.valid && designation.touched)}">
+         <label for="designation" class="col-sm-2 control-label">Designation</label>
+         <div class="col-sm-10">
+           <input formControlName="designation" type="text" class="form-control" id="designation" placeholder="designation"/>
+         </div>
+       </div>
+ 
+       <div class="form-group row" [ngClass]="{'has-error': (!company.valid && company.touched), 'has-success': (company.valid && company.touched)}">
+         <label for="company" class="col-sm-2 control-label">Company</label>
+         <div class="col-sm-10">
+           <input formControlName="company" type="text" class="form-control" id="company" placeholder="Company or Institute">
+         </div>
+       </div>
+ 
+       <div class="form-group row" [ngClass]="{'has-error': (!address.valid && address.touched), 'has-success': (address.valid && address.touched)}">
+         <label for="address" class="col-sm-2 control-label">Address</label>
+         <div class="col-sm-10">
+           <textarea formControlName="address" type="text" class="form-control" id="address" placeholder="Address"></textarea>
+         </div>
+       </div>
+       <div class="form-group row" [ngClass]="{'has-error': (!fromDate.valid && fromDate.touched), 'has-success': (fromDate.valid && fromDate.touched)}">
+         <label for="fromDate" class="col-sm-2 control-label">From Date</label>
+         <div class="col-sm-10">
+           <input formControlName="fromDate" type="date" class="form-control" id="fromDate" placeholder="From Date">
+         </div>
+       </div>
+       <div class="form-group row" [ngClass]="{'has-error': (!currentlyWorking.valid && currentlyWorking.touched), 'has-success': (currentlyWorking.valid && currentlyWorking.touched)}">
+         <label for="currentlyWorking" class="col-sm-2 control-label">Working</label>
+         <div class="col-sm-10">
+           <input formControlName="currentlyWorking" (click)="hideToDate()" type="checkBox" value="true" class="form-control" id="toDate" placeholder="Is Current Working">
+         </div>
+       </div>
+ 
+       <div class="form-group row" *ngIf="!currentlyWorkingCheck" [ngClass]="{'has-error': (!toDate.valid && toDate.touched), 'has-success': (toDate.valid && toDate.touched)}">
+         <label for="toDate" class="col-sm-2 control-label">To Date</label>
+         <div class="col-sm-10">
+           <input formControlName="toDate" type="date" class="form-control" id="toDate" placeholder="To Date">
+         </div>
+       </div>
+       
+ 
+             <div class="form-group row">
+               <div class="offset-sm-2 col-sm-2">
+                 <button [disabled]="!experienceUpdateform.valid" type="submit" class="btn btn-success btn-icon">Save Changes</button>
+               </div>
+             </div>
+     </form>

@@ -1,0 +1,30 @@
+.modal-content {
+    position: absolute;
+}
+
+
+.modal-header {
+    background-color: #0460D2;
+    padding: 10px;
+    border-bottom: 2px solid gray;
+}
+
+.btn-controls {
+    background-color: wheat;
+}
+
+.modal-body {
+
+
+    background-color: #FFFFFF;
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.modal-footer {
+    border-top: 2px solid gray;
+    background-color: #F9F9F9;
+}

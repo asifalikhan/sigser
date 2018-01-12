@@ -1,0 +1,131 @@
+
+<div>
+  <button *ngIf="canAssignInstructor" type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+    <i class="fa fa-plus"></i>&nbsp; 
+      Create Courses&nbsp; </button>
+  <br><br>
+</div>
+
+<p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}" [(value)]="msgs"></p-growl>
+
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="title">Create Course</h4>
+        </div>
+        <div class="modal-body">
+          <div>
+                <form [formGroup]="form"  class="form-horizontal">
+                
+                <div *ngIf="page==1" class="form-group row" [ngClass]="{'has-error': (!title.valid && title.touched), 'has-success': (title.valid && title.touched)}">
+                  <label for="title" class="col-sm-2 control-label">Title</label>
+          
+                  <div class="col-sm-10">
+                    <input formControlName="title" type="text" class="form-control" placeholder="Course title">
+                    <div *ngIf="validCheck && !title.valid" class="alert alert-danger">
+                          please enter a title
+                    </div>
+                  </div>
+                </div>
+          
+                <div *ngIf="page==1" class="form-group row" [ngClass]="{'has-error': (!description.valid && description.touched), 'has-success': (description.valid && description.touched)}">
+                  <label for="description" class="col-sm-2 control-label">Description</label>
+          
+                  <div class="col-sm-10">
+                    <textarea formControlName="description" type="text" class="form-control" id="description" placeholder="Course description"></textarea>
+                    <div *ngIf="validCheck && !description.valid" class="alert alert-danger">
+                          please enter description for course
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="page==2" class="form-group row" [ngClass]="{'has-error': (!purpose.valid && purpose.touched), 'has-success': (purpose.valid && purpose.touched)}">
+                    <label for="purpose" class="col-sm-2 control-label">Purpose</label>                   
+                    
+                    <div class="col-sm-10">
+                      <textarea formControlName="purpose" class="form-control" placeholder="What will they learn?"></textarea>
+                      <br>
+                      <button type="button" class="btn btn-success" (click)="newPurpose()" >
+                        <span class="fa fa-plus"></span>Add
+                      </button>
+                      <hr>
+                      <ul class="list-group">
+                        <li class="list-group-item" *ngFor="let item of purposes" style="background:rgba(0, 0, 0, 0.0)"> {{item}}
+                          <button class="btn btn-default ion-close" style="float:right;margin-left:10px" (click)=deletePurpose(item)></button>
+                        </li>
+                      </ul>
+                    </div>
+                </div>
+                <div *ngIf="page==3" class="form-group row" [ngClass]="{'has-error': (!audience.valid && audience.touched), 'has-success': (audience.valid && audience.touched)}">
+                    <label for="audience" class="col-sm-2 control-label">Audience</label>                   
+                    
+                    <div class="col-sm-10">
+                        <textarea formControlName="audience" placeholder="Who will be Audience?" class="form-control"></textarea>
+                        <br>
+                        <button type="button" class="btn btn-success" (click)="newAudience()" >
+                          <span class="fa fa-plus"></span>Add
+                        </button>
+                        <hr>
+                        <ul class="list-group">
+                          <li class="list-group-item" *ngFor="let item of audiences" style="background:rgba(0, 0, 0, 0.0)"> {{item}}
+                            <button class="btn btn-default ion-close" style="float:right;margin-left:10px" (click)=deleteAudience(item)></button>
+                          </li>
+                        </ul>
+                    </div>
+                </div>
+                <div *ngIf="page==4" class="form-group row" [ngClass]="{'has-error': (!requirements.valid && requirements.touched), 'has-success': (requirements.valid && requirements.touched)}">
+                    <label for="requirements" class="col-sm-2 control-label">Requirements</label>                   
+                    
+                    <div class="col-sm-10">
+                        <textarea formControlName="requirements" placeholder="What are requirements?" class="form-control"></textarea>
+                        <br>
+                        <button type="button" class="btn btn-success" (click)="newRequirement()" >
+                          <span class="fa fa-plus"></span>Add
+                        </button>
+                        <hr>
+                        <ul class="list-group">
+                          <li class="list-group-item" *ngFor="let item of requirementss" style="background:rgba(0, 0, 0, 0.0)"> {{item}}
+                            <button class="btn btn-default ion-close" style="float:right;margin-left:10px" (click)=deleteRequirement(item)></button>
+                          </li>
+                        </ul>
+                    </div>
+                </div>
+                <div *ngIf="canAssignInstructor && page==1" class="form-group row" >
+                    <label  for="instructorsName" class="col-sm-2 control-label">Instructor</label>
+            
+                    <div class="col-sm-4" [ngClass]="{'has-error': (!instructorsId.valid && instructorsId.touched), 'has-success': (instructorsId.valid && instructorsId.touched)}">
+                      <select  formControlName="instructorsId" class="form-control" id="instructorsName">
+                        <option  *ngFor="let instructorsId of instructorNames" value={{instructorsId.id}}>{{instructorsId.firstName}} {{instructorsId.lastName}}</option>  
+                      </select>
+                    </div>
+
+                    <label  for="batchesName" class="col-sm-2 control-label">Batch</label>
+                    <div class="col-sm-4" [ngClass]="{'has-error': (!batchesId.valid && batchesId.touched), 'has-success': (batchesId.valid && batchesId.touched)}">
+                      <select formControlName="batchesId" class="form-control" id="batchesName">
+                        <option *ngFor="let batchesId of batchesNames" value={{batchesId.id}}>{{batchesId.name}}</option>  
+                      </select>
+                    </div>
+                </div>
+                
+            
+              <div  class="modal-footer">
+                <button *ngIf="page!=1" class="btn btn-default btn-auth" style="float:left" (click)="previousPage()">Back</button>
+                <button *ngIf="page!=4" class="btn btn-default btn-auth" (click)="nextPage()">Next</button>
+                <button *ngIf="page==4" [disabled]="!form.valid" (click)="onSaveCourse(form.value)" class="btn btn-default btn-auth">Create Course</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="widgets">
+    <div class="row" >
+      <div baCardClass="with-scroll" class="smart-table-container">
+         <ng2-smart-table [settings]="settings" (edit)='edit($event)' (userRowSelect)='onEdit($event)' [source]="source" ></ng2-smart-table> 
+      </div>
+    </div>
+  </div>

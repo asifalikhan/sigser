@@ -1,0 +1,26 @@
+<p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}"
+[(value)]="msgs"></p-growl>
+<div class="container2" id="tourpackages-carousel">
+  
+  <div class="row">
+    
+    <div class="col-xs-18 col-sm-6 col-md-3" *ngFor="let course of courses; let i = index">
+      <div class="thumbnail">
+          <div class="caption">
+            <h4>{{course.title}}</h4>
+            <hr>
+            <div class="status" *ngIf="course.status==true;">
+              <i class="fa fa-circle online" ></i>online
+            </div>
+            <div class="status" *ngIf="course.status==false;">
+              <i class="fa fa-circle offline"></i>offline
+            </div><br>
+            <p><a *ngIf = "userType == 'instructor'"(click)="joinClass(course)" class="btn btn-success" role="button">Start Class</a>
+              <button [disabled]= "course.status==false" *ngIf = "userType == 'student'"(click)="joinClass(course)" class="btn btn-success" role="button">Join Class</button></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+</div>

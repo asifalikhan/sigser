@@ -1,0 +1,121 @@
+<p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}" [(value)]="msgs"></p-growl>
+
+      <div class="row">
+            <div class="col-sm-0"></div>
+             <div class="col-sm-12">
+            <form [formGroup]="personalDetailsForm" (ngSubmit)="onSaveDetails(personalDetailsForm.value)" class="form-horizontal">
+                <div class="form-group row" >
+                <div class="col-sm-6">
+                    <label for="Gender">Gender</label>
+                    <label  class="radio-inline custom-radio nowrap">
+                        <input formControlName="gender" class="form-control" type="radio" name="gender" [checked]="(gender==value)" class="form-control" id="GenderMale" value="Male" >
+                        <span>Male</span>
+                    </label>
+      
+                    <label class="radio-inline custom-radio nowrap">
+                      <input formControlName="gender" type="radio" name="gender" [checked]="(gender==value)" class="form-control" id="GenderFemale" value="Female">
+                      <span>Female</span>
+                    </label>
+                  </div>
+                </div>
+              <div class="form-group row" >
+                <div class="col-sm-6" [ngClass]="{'has-error': (!dateOfBirth.valid && dateOfBirth.touched), 'has-success': (dateOfBirth.valid && dateOfBirth.touched)}">
+                  <label for="Dob">Date Of Birth</label>
+                  <input formControlName="dateOfBirth" type="date"  class="form-control" id="Dob" placeholder="Date Of Bith">
+                </div>
+                <div class="col-sm-6" [ngClass]="{'has-error': (!city.valid && city.touched), 'has-success': (city.valid && city.touched)}">
+                    <label for="City" >City</label>
+                    <input formControlName="city" type="text" class="form-control" id="City" placeholder="City">
+                  </div>
+              </div>
+    
+              <div class="form-group row" >
+                  <div class="col-sm-6" [ngClass]="{'has-error': (!bloodGroup.valid && bloodGroup.touched), 'bloodGroup-success': (bloodGroup.valid && bloodGroup.touched)}">
+                      <label for="inputBloodGroup">Blood Group</label>
+                        <select formControlName="bloodGroup" class="form-control" id="bloodGroup" selected="bloodGroup" placeholder="Select Blood Group">
+                          <option *ngFor="let bG of bloodGroups">{{bG}}</option> 
+                        </select>
+                  </div>
+                <div class="col-sm-6" [ngClass]="{'has-error': (!religion.valid && religion.touched), 'has-success': (religion.valid && religion.touched)}">
+                    <label for="Religion" >Religion</label>
+                  <input formControlName="religion" type="text" class="form-control" id="Religion" placeholder="Religion">
+                </div>
+              </div>
+    
+              <div class="form-group row" >
+                
+                <div class="col-sm-6" [ngClass]="{'has-error': (!nationality.valid && nationality.touched), 'has-success': (nationality.valid && nationality.touched)}">
+                  <label for="Nationality">Nationality</label>
+                  <input formControlName="nationality" type="text" class="form-control" id="Nationality" placeholder="Nationality">
+                </div>
+                <div class="col-sm-6" [ngClass]="{'has-error': (!country.valid && country.touched), 'has-success': (country.valid && country.touched)}">
+                    <label for="country" >Country</label>
+                    <input formControlName="country" type="text" class="form-control" id="country" placeholder="Country">
+                  </div>
+                </div>
+    <!-- 
+              <div class="form-group row" [ngClass]="{'has-error': (!country.valid && country.touched), 'has-success': (country.valid && country.touched)}">
+                  <label for="country" class="col-sm-2 control-label">Country</label>
+                  <div class="col-sm-10">
+    
+                    <typeahead formControlName="country" [(ngModel)]="selectedFruit" [list]="countries" [searchProperty]="'name'" [displayProperty]="'name'"
+                    (suggestionSelected)="fruitSelected($event)"
+                    placeholder="Country" >
+                    </typeahead>
+                  </div>
+                </div> -->
+    
+                
+    
+              <div class="form-group row" [ngClass]="{'has-error': (!address.valid && address.touched), 'has-success': (address.valid && address.touched)}">
+                
+                <div class="col-sm-12">
+                    <label for="Address" >Address</label>
+                  <textarea formControlName="address" type="text" class="form-control" id="Address" placeholder="Address"></textarea>
+                </div>
+              </div>
+    
+              <div class="form-group row" >
+                
+                <div class="col-sm-6" [ngClass]="{'has-error': (!zipCode.valid && zipCode.touched), 'has-success': (zipCode.valid && zipCode.touched)}">
+                  <label for="zipCode" >Zip Code</label>
+                  <input formControlName="zipCode" type="text" class="form-control" id="zipCode" placeholder="ZipCode">
+                </div>
+                <div class="col-sm-6" [ngClass]="{'has-error': (!mobile.valid && mobile.touched), 'has-success': (mobile.valid && mobile.touched)}">
+                    <label for="mobile" >mobile</label>
+                  <input formControlName="mobile" type="text" class="form-control" id="mobile" placeholder="mobile">
+                </div>
+              </div>
+    
+              <div class="form-group row" [ngClass]="{'has-error': (!additionalInfo.valid && additionalInfo.touched), 'has-success': (additionalInfo.valid && additionalInfo.touched)}">
+                
+                <div class="col-sm-12">
+                    <label for="additional info">Additional info</label>
+                  <textarea formControlName="additionalInfo" id="wmd-input" class="form-control"  name="post-text" cols="50" rows="8" tabindex="101" data-min-length="" placeholder="additional info" id="Additional Info Here"></textarea>
+                </div>
+              </div>
+    
+                <div class="form-group row"><!-- 
+                  <div class="offset-sm-0 col-sm-1">
+                    <button (click)="cancel()" class="btn btn-default btn-icon">Cancel</button>
+                  </div> -->
+                  <div class="col-sm-1">
+                      <button [disabled]="!personalDetailsForm.valid" type="submit" class="btn btn-success btn-icon">Update</button>
+                  </div>
+                </div>
+    
+            </form>
+          </div><!-- 
+            <div class="col-sm-4">
+              <ba-card title="User Picture" baCardClass="with-scroll">
+                <ba-picture-uploader [picture]="profile.picture" (change)="onChange($event)" [defaultPicture]="defaultPicture" [uploaderOptions]="uploaderOptions"></ba-picture-uploader>
+              </ba-card>
+              <div class="hero-circle">
+                <div class="hero-face">
+                  <div id="hour" class="hero-hour" style="transform: rotate(419.333deg);"></div>
+                  <div id="minute" class="hero-minute" style="transform: rotate(352deg);"></div>
+                  <div id="second" class="hero-second" style="transform: rotate(240deg);"></div>
+                </div>
+              </div>
+            </div> -->
+        </div>

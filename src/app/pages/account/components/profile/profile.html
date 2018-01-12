@@ -1,0 +1,122 @@
+
+<!-- <button (click)="deleteFile()">delete</button>
+ -->
+
+<div *ngIf="!staticAlertClosed" (close)="staticAlertClosed = true"></div>
+<hr/>
+<ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}
+  </ngb-alert>
+ 
+  <p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}" [(value)]="msgs"></p-growl>
+  <ng2-slim-loading-bar></ng2-slim-loading-bar>
+
+<ngb-tabset *ngIf="!loading">
+  <ngb-tab title="Basic Information">
+    <ng-template ngbTabContent>
+        
+      <div class="row">
+        <div class="col-sm-0"></div>
+        <div class="col-sm-9">  
+          <form [formGroup]="generalInfoform" (ngSubmit)="onSubmit(generalInfoform.value)" class="form-horizontal">
+            <div class="row">
+              <div class="col-sm-6">  
+                <div class="form-group row" [ngClass]="{'has-error': (!firstName.valid && firstName.touched), 'has-success': (firstName.valid && firstName.touched)}">
+                  <div class="col-sm-12">
+                    <label for="firstName" >First Name<span class="mandatory">*</span></label>
+                    <input formControlName="firstName" type="text" class="form-control" id="firstName" placeholder="First Name">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">  
+                <div class="form-group row" [ngClass]="{'has-error': (!lastName.valid && lastName.touched), 'has-success': (lastName.valid && lastName.touched)}">
+                  <div class="col-sm-12">
+                    <label for="LastName" >Last Name<span class="mandatory">*</span></label>
+                    <input formControlName="lastName" type="text" class="form-control" id="LastName" placeholder="Last Name">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!username.valid && username.touched), 'has-success': (username.valid && username.touched)}">
+              <div class="col-sm-12">
+                <label for="username">User Name<span class="mandatory">*</span></label>
+                <input formControlName="username" type="text" class="form-control" id="username" placeholder="username">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!email.valid && email.touched), 'has-success': (email.valid && email.touched)}">
+              <div class="col-sm-12">
+                <label for="Email" >Email<span class="mandatory">*</span></label>
+                <input formControlName="email" type="email" class="form-control" id="Email" placeholder="Email">
+              </div>
+            </div>            
+            <!-- <div class="form-group row" >
+              <label for="rolesId" class="col-sm-1 control-label">Role</label>
+              <div class="col-sm-5" [ngClass]="{'has-error': (!rolesId.valid && rolesId.touched), 'has-success': (rolesId.valid && rolesId.touched)}">
+                <select formControlName="rolesId" class="form-control" id="rolesId">
+                    <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>  
+                </select>
+              </div>
+              <label for="groupsId" class="col-sm-1 control-label">Group</label>
+              <div class="col-sm-5"  [ngClass]="{'has-error': (!groupsId.valid && groupsId.touched), 'has-success': (groupsId.valid && groupsId.touched)}">
+                <select formControlName="groupsId" class="form-control" id="groupsId">
+                    <option *ngFor="let group of groups" value="{{group.id}}">{{group.name}}</option>  
+                </select>
+              </div>
+            </div> -->
+            <div class="form-group row"><!-- 
+                <div class="offset-sm-0 col-sm-1">
+                  <button (click)="cancel()"  class="btn btn-default btn-icon" >Cancel</button>
+                </div> -->
+              <div class="col-sm-1">
+                <button [disabled]="!generalInfoform.valid" type="submit" class="btn btn-success btn-icon">Update</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-sm-3">
+          <ba-card title="Profile Picture">
+            <ba-picture-uploader [picture]="profile.picture" (change)="onChange($event)" [defaultPicture]="defaultPicture" [uploaderOptions]="uploaderOptions"></ba-picture-uploader>
+          </ba-card>
+          
+          <!-- <div class="hero-circle">
+            <div class="hero-face">
+              <div id="hour" class="hero-hour" style='transform: rotate(20deg);'></div>
+              <div id="minute" class="hero-minute" style="transform: rotate(352deg);"></div>
+              <div id="second" class="hero-second" style="transform: rotate(240deg);"></div>
+            </div>
+          </div>
+          <h2>{{date | date: 'shortTime'}}</h2> -->
+        </div>
+      </div>
+    </ng-template>
+  </ngb-tab>
+
+  <ngb-tab title="Personal Details">
+    <ng-template ngbTabContent>
+      <personalDetails></personalDetails>
+    </ng-template>
+  </ngb-tab>
+
+  <ngb-tab title="Education">
+    <ng-template ngbTabContent>
+      <educations></educations>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Experience">
+    <ng-template ngbTabContent>
+      <experiences></experiences>
+    </ng-template>
+  </ngb-tab>
+
+  <ngb-tab title="Skills">
+    <ng-template ngbTabContent>
+        <skills></skills>
+    </ng-template>
+  </ngb-tab>
+
+  <ngb-tab title="Change Password">
+    <ng-template ngbTabContent>
+      <changePassword></changePassword>
+    </ng-template>
+  </ngb-tab>
+
+</ngb-tabset>

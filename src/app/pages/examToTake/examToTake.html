@@ -1,0 +1,155 @@
+<h3 *ngIf="showTimer" style="float:right">Time Remaining : {{minutes}}:{{secounds}}</h3>
+
+<div *ngIf="!staticAlertClosed" (close)="staticAlertClosed = true"></div>
+<hr/>
+<ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}
+  </ngb-alert>
+
+<!-- <div *ngIf="(displayQuestionSetter)">
+<a  (click)="examList()" class="push-right"><i class="fa fa-long-arrow-left"></i>Back to Exam list</a>
+<br><br>
+</div> -->
+
+<div class="widgets" *ngIf="(!displayQuestionSetter)">
+  <div class="row">
+    <ba-card baCardClass="with-scroll" class="smart-table-container">
+      <ng2-smart-table [settings]="settings" (userRowSelect)='onSelect($event)' [source]="source" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+    </ba-card>
+  </div>
+</div>
+
+<div *ngIf="(displayQuestionSetter)">
+          <form [formGroup]="questionform" (ngSubmit)="saveAndNext(questionform.value)" class="form-horizontal">
+            <div class="row">
+              <div class="col-sm-2">
+                  <div class="form-group row">
+                    <label for="qNumber" class="col-sm-12 control-label">Question#{{questionNumber}}</label>
+                  </div>
+              </div>
+
+              <div class="col-sm-1">
+                  <div class="form-group row">
+                    <label for="qMarks" class="col-sm-12 control-label">Marks : {{qMarks}}</label>
+                  </div>
+              </div>
+
+              <div class="col-sm-2">
+                  <div class="form-group row">
+                    <label for="examsId" class="col-sm-12 control-label">Total Questions : {{totalQ}}</label>
+                  </div>
+              </div>
+
+              <div class="col-sm-3">
+                <div class="form-group row">
+                  <label for="examsId" class="col-sm-12 control-label">Exam ID : {{examsId}}</label>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group row">
+                  <label for="examsId" class="col-sm-12 control-label">Student ID : {{studentId}}</label>
+                </div>
+              </div>
+
+            </div>
+            
+            <div class="row"> 
+                <div class="col-sm-12"> 
+                  <div class="form-group row" [ngClass]="{'has-error': (!question.valid && question.touched), 'has-success': (question.valid && question.touched)}">
+                    <div class="col-sm-12">
+                      <textarea [formControl]="question" type="text" class="form-control" id="inputquestion" placeholder="Your Question Here"></textarea>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+          <div class="row"> 
+            <div class="col-sm-4">
+
+              <div class="col-sm-12">
+                <div class="form-group row" [ngClass]="{'has-error': (!option1.valid && option1.touched), 'has-success': (option1.valid && option1.touched)}">
+                  <div class="col-sm-12">
+                    <input [formControl]="option1" type="text" class="form-control" id="inputoption1" placeholder="option1">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12">
+                <div class="form-group row" [ngClass]="{'has-error': (!option2.valid && option2.touched), 'has-success': (option2.valid && option2.touched)}">
+                  <div class="col-sm-12">
+                    <input [formControl]="option2" type="text" class="form-control" id="inputoption2" placeholder="option2">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12">
+                <div class="form-group row" [ngClass]="{'has-error': (!option3.valid && option3.touched), 'has-success': (option3.valid && option3.touched)}">
+                  <div class="col-sm-12">
+                    <input [formControl]="option3" type="text" class="form-control" id="inputoption3" placeholder="option3">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12">
+                <div class="form-group row" [ngClass]="{'has-error': (!option4.valid && option4.touched), 'has-success': (option4.valid && option4.touched)}">
+                  <div class="col-sm-12">
+                    <input [formControl]="option4" type="text" class="form-control" id="inputoption4" placeholder="option4">
+                  </div>
+                </div>
+              </div>
+            </div>    
+          
+
+            <div class="col-sm-4">
+                
+              <div class="form-group row">
+                <div class="offset-sm-0 col-sm-9">
+                  <label class="radio-inline custom-radio nowrap">
+                    <input type="radio" formControlName="trueOption"  id="checkbox" value="option1">
+                    <span>True Answer</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="offset-sm-0 col-sm-9">
+                  <label class="radio-inline custom-radio nowrap">
+                     <input type="radio" formControlName="trueOption" id="checkbox" value="option2">
+                     <span>True Answer</span>
+                  </label>
+                </div>
+              </div>
+
+
+                <div class="form-group row">
+                  <div class="offset-sm-0 col-sm-9">
+                        <label class="radio-inline custom-radio nowrap">
+                          <input type="radio" formControlName="trueOption" id="checkbox" value="option3">
+                          <span>True Answer</span>
+                        </label>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="offset-sm-0 col-sm-9">
+                      <label class="radio-inline custom-radio nowrap">
+                        <input type="radio" formControlName="trueOption" id="checkbox" value="option4">
+                        <span>True Answer</span>
+                      </label>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+              <div class="col-sm-6" >
+                <div class="form-group row">
+                  <div class="offset-sm-9 col-sm-12">
+                    <button  [disabled]="(!questionform.valid)" type="submit" class="btn btn-success" >Save & Next</button>
+                  </div>
+                </div>
+              </div>
+
+
+          </form>
+
+        </div>

@@ -1,0 +1,190 @@
+<div *ngIf="!viewData && canManage">
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+  <i class="fa fa-plus"></i>&nbsp; 
+    Add User&nbsp; </button>
+<br><br>
+</div>
+<p-growl class="growl" [ngClass]="{'ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}" [(value)]="msgs"></p-growl>
+
+<div *ngIf="viewData">
+  <a  (click)="backToTable()" class="push-right"><i class="fa fa-long-arrow-left"></i>Back to All</a>
+  <br><br>
+  </div>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="title">  Add User</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div *ngIf="submitted" class="form_status">
+            <div class="_content">
+              <div class="alert push-bottom alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>A new user has been successfully registered.
+              </div>
+            </div>
+          </div>
+          <form [formGroup]="registerform" (ngSubmit)="onSaveUser(registerform.value)" class="form-horizontal">
+            <div class="form-group row" [ngClass]="{'has-error': (!firstName.valid && firstName.touched), 'has-success': (firstName.valid && firstName.touched)}">
+              <label for="inputFirstname" class="col-sm-3 control-label">First Name</label>
+
+              <div class="col-sm-9">
+                <input [formControl]="firstName" type="text" class="form-control" id="inputFirstname" placeholder="First Name">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!lastName.valid && lastName.touched), 'has-success': (lastName.valid && lastName.touched)}">
+              <label for="inputLastname" class="col-sm-3 control-label">Last Name</label>
+
+              <div class="col-sm-9">
+                <input [formControl]="lastName" type="text" class="form-control" id="inputLastname" placeholder="Last Name">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!username.valid && username.touched), 'has-success': (username.valid && username.touched)}">
+              <label for="inputUsername" class="col-sm-3 control-label">User Name</label>
+
+              <div class="col-sm-9">
+                <input formControlName="username" type="text" class="form-control" id="inputUsername" placeholder="username">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!email.valid && email.touched), 'has-success': (email.valid && email.touched)}">
+              <label for="inputEmail" class="col-sm-3 control-label">Email</label>
+
+              <div class="col-sm-9">
+                <input formControlName="email" type="email" class="form-control" id="inputEmail" placeholder="Email">
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': (!password.valid && password.touched), 'has-success': (password.valid && password.touched)}">
+              <label for="inputPass" class="col-sm-3 control-label">Password</label>
+
+              <div class="col-sm-9">
+                <input [formControl]="password" type="password" class="form-control" id="inputPass" placeholder="Password">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!repeatPassword.valid && repeatPassword.touched), 'has-success': (repeatPassword.valid && repeatPassword.touched)}">
+              <label for="inputRepeatPass" class="col-sm-3 control-label">Repeat</label>
+
+              <div class="col-sm-9">
+                <input [formControl]="repeatPassword" type="password" class="form-control" id="inputRepeatPass" placeholder="Repeat">
+                <span *ngIf="!passwords.valid && (password.touched || repeatPassword.touched)" class="help-block sub-little-text">Passwords don't match.</span>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': (!rolesId.valid && rolesId.touched), 'has-success': (rolesId.valid && rolesId.touched)}">
+                <label for="rolesId" class="col-sm-3 control-label">Role</label>
+                <div class="col-sm-9">
+                  <select formControlName="rolesId" class="form-control" id="rolesId">
+                      <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>  
+                  </select>
+                </div>
+            </div>
+            
+            <div class="form-group row" [ngClass]="{'has-error': (!groupsId.valid && groupsId.touched), 'has-success': (groupsId.valid && groupsId.touched)}">
+                <label for="groupsId" class="col-sm-3 control-label">Group</label>
+                <div class="col-sm-9">
+                  <select formControlName="groupsId" class="form-control" id="groupsId">
+                      <option *ngFor="let group of groups" value="{{group.id}}">{{group.name}}</option>  
+                  </select>
+                </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': (!batchesId.valid && batchesId.touched), 'has-success': (batchesId.valid && batchesId.touched)}">
+                <label for="batchesId" class="col-sm-3 control-label">Batch</label>
+                <div class="col-sm-9">
+                  <select [formControl]="batchesId" class="form-control" id="batchesId">
+                      <option *ngFor="let batch of batches" value="{{batch.id}}">{{batch.batchCode}}</option>  
+                  </select>
+                </div>
+            </div> 
+
+            <div class="modal-footer">
+              <button [disabled]="!registerform.valid" type="submit" class="btn btn-default btn-auth">Save User</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="widgets" *ngIf="!viewData">
+  <div class="row">
+    <ba-card  baCardClass="with-scroll" class="smart-table-container">
+       <ng2-smart-table [settings]="settings" (userRowSelect)='onView($event)' (edit)='onEdit($event)' [source]="source"  (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table> 
+    </ba-card>
+  </div>
+</div>
+<div *ngIf="viewData">
+  <br>
+  <form [formGroup]="updateForm" (ngSubmit)="onUpdateService(updateForm.value)" class="form-horizontal">
+    <div class="form-group row" [ngClass]="{'has-error': (!firstName2.valid && firstName2.touched), 'has-success': (firstName2.valid && firstName2.touched)}">
+      <label for="inputFirstname2" class="col-sm-3 control-label">First Name</label>
+
+      <div class="col-sm-9">
+        <input [formControl]="firstName2" type="text" class="form-control" id="inputFirstname2" placeholder="First Name">
+      </div>
+    </div>
+    <div class="form-group row" [ngClass]="{'has-error': (!lastName2.valid && lastName2.touched), 'has-success': (lastName2.valid && lastName2.touched)}">
+      <label for="inputLastname2" class="col-sm-3 control-label">Last Name</label>
+
+      <div class="col-sm-9">
+        <input [formControl]="lastName2" type="text" class="form-control" id="inputLastname2" placeholder="Last Name">
+      </div>
+    </div>
+
+    <div class="form-group row" [ngClass]="{'has-error': (!username2.valid && username2.touched), 'has-success': (username2.valid && username2.touched)}">
+      <label for="username2" class="col-sm-3 control-label">User Name</label>
+
+      <div class="col-sm-9">
+        <input [formControl]="username2" type="text" class="form-control" id="username2" placeholder="User Name">
+      </div>
+    </div>
+    <div class="form-group row" [ngClass]="{'has-error': (!email2.valid && email2.touched), 'has-success': (email2.valid && email2.touched)}">
+      <label for="inputEmail2" class="col-sm-3 control-label">Email</label>
+
+      <div class="col-sm-9">
+        <input [formControl]="email2" type="email" class="form-control" id="inputEmail2" placeholder="Email">
+      </div>
+    </div>
+     <div class="form-group row" [ngClass]="{'has-error': (!rolesId.valid && rolesId.touched), 'has-success': (rolesId.valid && rolesId.touched)}">
+        <label for="rolesId" class="col-sm-3 control-label">Role</label>
+        <div class="col-sm-9">
+          <select [formControl]="rolesId2" class="form-control" id="rolesId">
+              <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>  
+          </select>
+        </div>
+    </div> 
+    
+   <div class="form-group row" [ngClass]="{'has-error': (!groupsId2.valid && groupsId2.touched), 'has-success': (groupsId2.valid && groupsId2.touched)}">
+        <label for="groupsId2" class="col-sm-3 control-label">Group Name</label>
+        <div class="col-sm-9">
+          <select [formControl]="groupsId2" class="form-control" id="groupsId2">
+              <option *ngFor="let group of groups" value="{{group.id}}">{{group.name}}</option>  
+          </select>
+        </div>
+    </div> 
+
+    <div class="form-group row" [ngClass]="{'has-error': (!batchesId2.valid && batchesId2.touched), 'has-success': (batchesId2.valid && batchesId2.touched)}">
+         <label for="batchesId2" class="col-sm-3 control-label">Batch</label>
+         <div class="col-sm-9">
+           <select [formControl]="batchesId2" class="form-control" id="batchesId2">
+               <option *ngFor="let batch of batches" value="{{batch.id}}">{{batch.batchCode}}</option>  
+           </select>
+         </div>
+     </div> 
+
+    <div class="modal-footer">
+      <button [disabled]="!updateForm.valid" type="submit" class="btn btn-default btn-auth">Save User</button>
+    </div>
+  </form>
+</div>
+
+<!-- <div class="widgets" *ngIf="!display">
+  <div class="row">
+    <ba-card  baCardClass="with-scroll" class="smart-table-container">
+      <ng2-smart-table  [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+    </ba-card>
+  </div>
+</div> -->

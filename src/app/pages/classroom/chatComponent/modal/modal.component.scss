@@ -1,0 +1,182 @@
+.container {
+    // position: absolute;
+    }
+    .modal-content {
+       position: absolute;
+        width: 900px;
+        height: 600px;
+    }
+//     .modal-content{
+   
+//    width: 700px;
+//    margin: auto;
+//  }
+    
+    
+    .modal-header {
+      background-image: url(/assets/img/blur-bg.jpg);
+        background-color: #0460D2;
+        padding: 15px;
+        cursor: move;
+        color: #808181;
+    }
+    
+    .btn-controls {
+        background-color: #FFFFFF;
+        text-align: center;
+        height: 15%;
+        padding: 5px;
+        border-bottom: 2px solid gray;
+    }
+    
+    .modal-body {
+      background-image: url(/assets/img/blur-bg.jpg);
+        overflow-y: scroll;
+        background-color: #FFFFFF;
+
+         // height: 0px;;
+          display: block;
+         // width: 100%;
+          max-width: 100%;
+        //  margin: 0 auto;
+          grid-template-columns: repeat(auto-fill,22em);
+          grid-gap: 10px;
+        //  position: relative;
+    }
+    
+    .modal-footer {
+      background-image: url(/assets/img/blur-bg.jpg);
+        border-top: 2px solid gray;
+        background-color: #F9F9F9;
+    }
+    
+    // .btn-margin {
+    //     margin: 3px;
+    // }
+    
+    .btn-margin-top {
+        margin-top: 15px;
+    }
+    
+    .controls-btn {
+        
+        background: #0088FF;
+        margin: 4px;
+        border-radius: 40px;
+      }
+    
+      .btn {
+        border-radius: 3px;
+      }
+    
+      .btn-circle {
+        width: 30px;
+        height: 30px;
+        padding: 6px 0;
+        border-radius: 15px;
+        text-align: center;
+        font-size: 12px;
+        line-height: 1.428571429;
+      }
+    
+      .btn-circle.btn-lg {
+        width: 50px;
+        height: 50px;
+        padding: 10px 16px;
+        border-radius: 25px;
+        font-size: 18px;
+        line-height: 1.33;
+        margin-right: 10px;
+      }
+    
+    
+      .chat-history-other {
+      //  padding: 30px 15px 20px;
+      //  border-bottom: 2px solid #a9bac0;
+     //   overflow-y: scroll;
+        height: auto;
+      //  background-color: #cecece;
+        display: grid;
+        width: 100%;
+        max-width: 100%;
+     //   margin: 0 auto;
+        grid-template-columns: repeat(auto-fill,22em);
+        grid-gap: 10px;
+        position: relative;
+    
+      }
+      .space-bt-video {
+        margin: 5px;
+      }
+
+      .my-audio-video-div {
+        width: 100%;
+        height: 230px;
+        
+      }
+    
+    // .min {
+    //     width: 250px;
+    //     height: 35px;
+    //     overflow: hidden !important;
+    //     padding: 0px !important;
+    //     margin: 0px;
+    //     position: static !important;
+    //   }
+      
+    //   .min .modal-dialog, .min .modal-content {
+    //     height: 100%;
+    //     width: 100%;
+    //     margin: 0px !important;
+    //     padding: 0px !important;
+    //   }
+      
+    //   .min .modal-header {
+    //     height: 100%;
+    //     width: 100%;
+    //     margin: 0px !important;
+    //     padding: 3px 5px !important;
+    //   }
+      
+    //   .display-none { display: none; }
+      
+    //   button .fa {
+    //     font-size: 16px;
+    //     margin-left: 10px;
+    //   }
+      
+    //   .min .fa { font-size: 14px; }
+      
+    //   .min .menuTab { display: none; }
+      
+    //   button:focus { outline: none; }
+      
+    //   .minmaxCon {
+    //     height: 35px;
+    //     bottom: 1px;
+    //     left: 1px;
+    //     position: fixed;
+    //     right: 1px;
+    //     z-index: 9999;
+    //   }
+
+    .square {
+      float:left;
+      position: relative;
+      width: 30%;
+      padding-bottom : 30%; /* = width for a 1:1 aspect ratio */
+      margin:1.66%;
+      background-position:center center;
+      background-repeat:no-repeat;
+      background-size:cover; /* you change this to "contain" if you don't want the images to be cropped */
+  }
+  
+  .img_1-1{background-image:url('https://farm4.staticflickr.com/3766/12953056854_b8cdf14f21.jpg');}
+  .img_1-2{background-image:url('https://farm7.staticflickr.com/6092/6227418584_d5883b0948.jpg');}
+  .img_1-3{background-image:url('https://farm8.staticflickr.com/7187/6895047173_d4b1a0d798.jpg');}
+  
+  .img_2-1{background-image:url('https://farm8.staticflickr.com/7163/6822904141_50277565c3.jpg');}
+  .img_2-2{background-image:url('https://farm7.staticflickr.com/6139/5986939269_10721b8017.jpg');}
+  .img_2-3{background-image:url('https://farm4.staticflickr.com/3165/5733278274_2626612c70.jpg');}
+  
+  

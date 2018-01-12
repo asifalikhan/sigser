@@ -1,0 +1,626 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
+@import '../../theme/sass/auth';
+@import "../../theme/sass/conf/conf";
+@import '../../services/alert';
+$green: #86BB71;
+$blue: #94C2ED;
+$orange: #E38968;
+$gray: rgba(#000000, 0.5);
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  background: rgba(#000000, 0.5);;
+  font: 14px/20px "Lato", Arial, sans-serif;
+  padding: 40px 0;
+  color: white;
+}
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,700,400italic);
+
+html {
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  min-height: 3000px;
+  padding-top: 70px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.thumbnail {
+    position: relative;
+    padding: 0px;
+    margin-bottom: 20px;
+    background-color: #282828;
+    height: auto;
+    border-radius: 20px;
+    text-align: center;
+    padding: 20px;
+    .group-edit-btn {
+      margin: 5px;
+    }
+    .group-edit-btn:hover{
+      
+      font-size: larger;
+      cursor: pointer;
+      
+    }  
+}
+
+// .thumbnail:hover {
+//   cursor: pointer;
+//   background-color: #0074D8;
+//   box-shadow: 0px 8px 16px 0px;
+// }
+
+.thumbnail img {
+    width: 100%;
+}
+
+.container {
+  margin: 0 auto;
+  width: 100%;
+  background: rgba(#000000, 0.5);
+  height: auto;
+  border-radius: 20px;
+}
+
+.container2 {
+  margin: 0 auto;
+  width: 100%;
+  background: rgba(40, 40, 40, 0.00);
+  height: auto;
+}
+
+.people-list {
+  width: 30%;
+  float: left;
+  height: auto;
+  
+  .search {
+    padding: 10px;
+  }
+
+  .search-on-web {
+    padding: 10px;
+  }
+  
+  input {
+    border-radius: 3px;
+    border: none;
+    padding: 14px;
+    color: black;
+    background: rgba(#000000, 0.5);
+    width: 93%;
+    font-size: 14px;
+  }
+  
+  .fa-search {
+    position: relative;
+    left: -35px;
+  }
+  
+  ul {
+    background-color: rgba(#000000, 0.5);
+    padding: 20px;
+    height: 505px;
+    overflow-y: scroll;
+    list-style-type: none;
+    li {
+      padding: 5px;
+      margin-bottom: 5px;
+    }
+  }
+
+  img {
+    float: left;
+    border-radius: 40px;
+    border-color: rgba(#000000, 0.5);
+  }
+  
+  .about {
+    float: left;
+    margin-top: 8px;
+  }
+  
+  .about {
+    padding-left: 8px;
+  }
+  
+  .status {
+    color: $gray;
+  }
+  
+}
+
+.chat {
+  width: 70%;
+  float:left;
+  background:rgba(0, 0, 0, 0.0);
+  color: #209e91;
+  height: auto;
+  
+  .chat-header {
+    padding: 5px;
+    color: #ffffff;
+    background:rgba(0, 0, 0, 0.0);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.75);
+    
+    img {
+      float: left;
+      border-radius: 30px;
+      border-color: rgba(#000000, 0.5);
+    }
+    
+    .chat-about {
+      float: left;
+      padding-left: 10px;
+      margin-top: 6px;
+    }
+    
+    .chat-with {
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 23px;
+    }
+    
+    .chat-num-messages {
+      color: $gray;
+    }
+    
+    .fa-star {
+      float: right;
+      color: #D8DADF;
+      font-size: 20px;
+      margin-top: 12px;
+    }
+  }
+  
+  .header-btn {
+    float: right;
+    
+    background: #2eb22c;
+    border-color: #40daf1;
+    float: right;
+    margin: 4px;
+    border-radius: 40px;
+  }
+
+  .btn {
+    border-radius: 3px;
+  }
+
+  .btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.428571429;
+  }
+
+  .btn-circle.btn-lg {
+    width: 50px;
+    height: 50px;
+    padding: 10px 16px;
+    border-radius: 25px;
+    font-size: 18px;
+    line-height: 1.33;
+    margin-right: 0px;
+  }
+
+  .chat-fix-width {
+    overflow-y: scroll;
+    height: auto;
+  }
+
+  .chat-history-other {
+    padding: 30px 15px 20px;
+    border-bottom: 2px solid rgba(#000000, 0.5);;
+    overflow-y: scroll;
+    height: 0px;
+    background-color: rgba(#000000, 0.5);;
+    display: grid;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    grid-template-columns: repeat(auto-fill,22em);
+    grid-gap: 10px;
+    position: relative;
+
+  }
+
+  .chat-history {
+    padding: 30px 15px 20px;
+    border-bottom: 2px solid rgba(#000000, 0.5);;
+    overflow-y: scroll;
+    height: 404px;
+    ul {
+      list-style-type: none;
+    }
+    .message-data {
+      margin-bottom: 15px;
+    }
+    
+    .message-data-time {
+      color: lighten($gray, 8%);
+      padding-left: 6px;
+    } 
+    
+    .message {      
+      color: white;
+      padding: 18px 20px;
+      line-height: 26px;
+      font-size: 16px;
+      border-radius: 7px;
+      margin-bottom: 30px;
+      width: 90%;
+      position: relative;
+      
+      &:after {
+        bottom: 100%;
+        left: 7%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-bottom-color: $green;
+        border-width: 10px;
+        margin-left: -10px;
+      }
+    }
+    
+    .my-message {
+      background: $green;
+    }
+    
+    .other-message {
+      background: $blue;
+      
+      &:after {
+        border-bottom-color: $blue;
+        left: 93%;
+      }
+    }
+    
+  }
+  
+  .chat-message {
+    padding: 7px;
+    margin-bottom: -15px;
+    
+    textarea {
+      width: 91%;
+      border: none;
+      color: #ffffff;
+      padding: 10px 20px;
+      font: 14px/22px "Segoe", Arial, sans-serif;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      resize: none;
+      background-color: rgba(#000000, 0.5);;
+      
+    }
+    
+    .fa-file-o, .fa-file-image-o {
+      font-size: 16px;
+      color: gray;
+      cursor: pointer;
+      
+    }
+
+    .special-btn {
+      background: #1b2c2e;
+      border-color: #40daf1;
+      float: right;
+      margin: 4px;
+      border-radius: 40px;
+    }
+    
+    button {
+      float: right;
+      color: $blue;
+      font-size: 16px;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      background: #F2F5F8;
+      
+      &:hover {
+        color: darken($blue, 7%);
+      }
+    }
+  }
+}
+
+.online, .offline, .me {
+    margin-right: 3px;
+    font-size: 10px;
+  }
+  
+.online {
+  color: $green;
+  p {
+    display: inline;
+    margin-left: 5px;
+  }
+}
+  
+.offline {
+  color: #a9bac0;
+  p {
+    display: inline;
+    margin-left: 5px;
+  }
+}
+
+.me {
+  color: $blue;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.float-right {
+  float: right;
+}
+
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+
+.leavebtn{
+  margin-bottom: 20px;
+  background-color: #209e91;
+  border-radius: 5px;
+  border-color: transparent;
+  height: 40px;
+  margin-top: 20px;
+  width: 100%;
+  color: white;
+}
+.manage-groups{
+  margin-bottom: 20px;
+  background-color: #209e91;
+  border-radius: 5px;
+  border-color: transparent;
+  height: 40px;
+  margin-top: 20px;
+  width: 100%;
+  color: white;
+}
+
+.find-people{
+  margin-bottom: 20px;
+  background-color: #209e91;
+  border-radius: 5px;
+  border-color: transparent;
+  height: 40px;
+  margin-right: 5px;
+  width: 100%;
+  color: white;
+}
+.customhover:hover {
+  cursor: pointer;
+  color: #209e91;
+  border-radius: 10px;
+}
+
+.notification {
+  float: right;
+  margin: 15px;
+  background-color: #209e91;
+  color: white;
+  padding: 4px;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  font-size: small;
+}
+
+.space-bt-video {
+  margin: 10px;
+
+}
+
+// video {
+//   width: 300px;
+//   height: 200px;
+// }
+
+
+
+.selected {
+  background-color: #209e91;
+  border-radius: 10px;
+}
+.selected:hover {
+  color: white;
+  background-color: #209e91;
+  border-radius: 10px;
+}
+
+.paper-clip {
+  color: black;
+  margin: -38px 10px;
+
+}
+.paper-plan {
+  color: black;
+  margin-right: 0px;
+}
+
+.form-control { width: 300px; display: inline; }
+
+.searching-value {
+  color: #FFFFFF;
+}
+.invalid-feedback {
+  color: red;
+}
+.dropdown-menu
+{
+ min-width: 22rem;
+ left: 32px;
+}
+
+.dropdown-icon:hover {
+  font-size: larger;
+  cursor: pointer;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+  color:    white;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+ color:    white;
+ opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+ color:    white;
+ opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+ color:    white;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+ color:    white;
+}
+
+
+
+
+
+
+
+
+///////////////////////////////////////
+
+
+@import '../../theme/sass/auth';
+@import "../../theme/sass/conf/conf";
+@import "../../services/alert";
+@import "../../services/loading";
+
+:host /deep/ .widgets {
+  .smart-table-container {
+    width: 100%;
+  }
+}
+
+.list-group-item{
+  background-image: url(/assets/img/blur-bg-mobile.jpg);
+}
+
+:host /deep/ {
+  ng2-smart-table {
+    th, td {
+      border: 1px solid $border-light !important;
+      line-height: 35px;
+      vertical-align: middle;
+    }
+
+    table tr td {
+      padding: 0 8px;
+    }
+
+    color: $default-text;
+
+    input {
+      line-height: 1.5 !important;
+    }
+
+    ng2-smart-table-cell {
+      color: $default-text;
+      line-height: 35px;
+    }
+
+    tbody {
+      tr {
+        color: $default-text;
+      }
+      tr:hover {
+        background: rgba(0, 0, 0, 0.03);
+        cursor: pointer;
+      }
+    }
+
+    a.ng2-smart-sort-link {
+      font-size: 14px !important;
+      color: $default-text;
+      font-weight: $font-bolder;
+      &.sort {
+        font-weight: $font-bolder !important;
+
+        &::after {
+          border-bottom-color: $default-text !important;
+        }
+      }
+    }
+
+    .ng2-smart-actions {
+      width: 70px;
+      text-align: center;
+      .actions {
+        float: none;
+        text-align: center;
+      }
+    }
+
+    .ng2-smart-actions-title-add {
+      text-align: center;
+    }
+
+    a.ng2-smart-action, .ng2-smart-title {
+      font-size: 14px !important;
+      color: $default-text;
+      padding: 0 5px;
+      display: inline-block;
+
+      &.ng2-smart-action-add-add {
+        font-size: 25px !important;
+      }
+    }
+
+    nav.ng2-smart-pagination-nav {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+.modal-content{
+ // background-color: cornflowerblue;
+ background-image: url(/assets/img/blur-bg.jpg);
+  
+}
+
+#title{
+margin-left: 10px;
+}
+
+.close{
+  color: red; 
+}
+
+.mandatory{
+    color: #ff2346;
+}

@@ -1,0 +1,56 @@
+<p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}"
+  [(value)]="msgs"></p-growl>
+
+<div class="row">
+  <div class="col-sm-1"></div>
+  <div class="col-sm-10">
+    <ba-card>
+      <form [formGroup]="form" (ngSubmit)="onSave(form.value)" class="form-horizontal">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group row" [ngClass]="{'has-error': (!examTitle.valid && examTitle.touched), 'has-success': (examTitle.valid && examTitle.touched)}">
+              <label for="examTitle" class="col-sm-4">Assesment Title</label>
+              <div class="col-sm-8">
+                <select formControlName="examTitle" class="form-control" id="examTitle">
+                          <option *ngFor="let examTitle of exams" value="{{examTitle.examTitle}}">{{examTitle.examTitle}}</option>  
+                      </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row" [ngClass]="{'has-error': (!examDate.valid && examDate.touched), 'has-success': (examDate.valid && examDate.touched)}">
+              <label for="examDate" class="col-sm-4">Assesment Date</label>
+              <div class="col-sm-8">
+                <input formControlName="examDate" type="date" class="form-control" id="examDate" placeholder="examDate">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group row" [ngClass]="{'has-error': (!startTime.valid && startTime.touched), 'has-success': (startTime.valid && startTime.touched)}">
+              <label for="startTime" class="col-sm-4">Start Time</label>
+              <div class="col-sm-8">
+                <input formControlName="startTime" type="time" class="form-control" id="startTime" placeholder="Start Time">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row" [ngClass]="{'has-error': (!endTime.valid && endTime.touched), 'has-success': (endTime.valid && endTime.touched)}">
+              <label for="endTime" class="col-sm-4">End Time</label>
+              <div class="col-sm-8">
+                <input formControlName="endTime" type="time" class="form-control" id="endTime" placeholder="End Time">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-2">
+              <button [disabled]="!form.valid" type="submit" class="btn btn-success">Save</button>
+            </div>
+          </div>
+      </form>
+    </ba-card>
+  </div>
+</div>

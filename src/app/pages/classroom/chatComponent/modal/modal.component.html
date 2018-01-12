@@ -1,0 +1,45 @@
+<div #modalone class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">{{modalHeader}}</h4>
+        <button type="button" class="close modalMinimize btn-margin-top" aria-label="Close" (click)="minimize()">
+                       <i class='fa fa-minus'></i>
+                   </button>
+
+        <button type="button" class="close" (click)="fullScreen()">
+                        <i class='fa fa-window-maximize'></i>
+                    </button>
+
+        <button type="button" class="close" (click)="closeModal('cross')">
+                        <i class='fa fa-times'></i>
+                    </button>
+
+    </div>
+    <!-- <div class="btn-controls">
+                    <button #audioBtn title="mute" class="btn btn-circle btn-lg controls-btn" type="button"
+                    (click)="muteMicrophone()"><i class="fa fa-microphone"></i></button>
+
+                    <button #audioBtn title="volume" class="btn btn-circle btn-lg controls-btn" type="button"
+                    (click)="muteVolume()"><i class="fa fa-volume-up"></i></button>
+                </div> -->
+    <div class="modal-body">
+
+        <div #myVideoAudioDiv class="my-audio-video-div">
+
+            <ng-container class="space-bt-video" #myVideoAudioPlacedHere>
+            </ng-container>
+
+        </div>
+
+
+        <div #videoAudioDiv class="chat-history-other">
+
+            <ng-container class="space-bt-video" #videoAudioPlacedHere>
+            </ng-container>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="closeModal('close button')">Close</button>
+    </div>
+</div>

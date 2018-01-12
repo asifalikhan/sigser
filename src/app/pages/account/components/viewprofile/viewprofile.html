@@ -1,0 +1,134 @@
+<p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}"
+  [(value)]="msgs"></p-growl>
+
+
+<div *ngIf="!loading" class="container">
+  <div class="fb-profile">
+    <!--  <img align="left" class="fb-image-lg" src="/assets/images/iiui.jpg" alt="Profile image example" /> -->
+    <img align="left" *ngIf="hasPic" class="fb-image-profile thumbnail" src={{profilePic}} alt="Profile image example"/>
+    <img align="left" *ngIf="!hasPic" class="fb-image-profile thumbnail" src="/assets/img/app/profile/no-photo.png" alt="Profile image example"/>
+    <!--  <div class="fb-profile-text"> -->
+<!--     <div *ngIf="canManage" class="col-sm-5" style="float:right">
+      <label for="groupsId" class="col-sm-4 control-label">Assign Group</label>
+      <div class="col-sm-8">
+        <select [(ngModel)]="groupsId" class="form-control" id="groupsId">
+          <option *ngFor="let group of groups" value="{{group.id}}">{{group.name}}</option>
+        </select>
+      </div>
+      <div class="col-sm-1">
+        <button (click)="saveGroup()" class="btn btn-success">save</button>
+      </div>
+    </div> -->
+    <div class="fb-profile-text">
+      <h2>{{name}}</h2>
+      <h4>{{designation}}</h4>
+      <h4>{{fieldOfStudy}}</h4>
+      <h4>{{institute}}</h4>
+      <div  class="form-group">
+        <ngb-rating [disabled]="disable" [(ngModel)]="rating"></ngb-rating>
+      </div>
+    </div>
+
+    <div class="twPc-divStats">
+      <ul class="twPc-Arrange">
+        <ba-card title="Education" baCardClass="with-scroll button-panel">
+          <ngb-accordion #acc="ngbAccordion" activeIds="config-panel-one">
+            <ngb-panel *ngFor="let degre of degrees" title={{degre.institute}}>
+              <ng-template ngbPanelContent>
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <th>Degree</th>
+                      <td>{{degre.degree}}</td>
+                    </tr>
+                    <tr>
+                      <th>Field of Study</th>
+                      <td>{{degre.fieldOfStudy}}</td>
+                    </tr>
+                    <tr>
+                      <th>Grade</th>
+                      <td>{{degre.grade}}</td>
+                    </tr>
+                    <tr>
+                      <th>Activities</th>
+                      <td>{{degre.cActivities}}</td>
+                    </tr>
+                    <tr>
+                      <th>Completion Year</th>
+                      <td>{{degre.completionYear}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+        </ba-card>
+        <ba-card title="Experience" baCardClass="with-scroll button-panel">
+          <ngb-accordion #acc="ngbAccordion" activeIds="config-panel-one">
+            <ngb-panel *ngFor="let experience of experiences" title={{experience.designation}}>
+              <ng-template ngbPanelContent>
+                  <table class="table">
+                      <tbody>
+                        <tr>
+                          <th>Designation</th>
+                          <td>{{experience.designation}}</td>
+                        </tr>
+                        <tr>
+                          <th>Company</th>
+                          <td>{{experience.company}}</td>
+                        </tr>
+                        <tr>
+                          <th>Address</th>
+                          <td>{{experience.address}}</td>
+                        </tr>
+                        <tr>
+                          <th>Join Date</th>
+                          <td>{{experience.fromDate | date: 'mediumDate'}}</td>
+                        </tr>
+                        <tr *ngIf="!experience.currentlyWorking">
+                          <th>Leaving Date</th>
+                          <td>{{experience.toDate | date: 'mediumDate'}}</td>
+                        </tr>
+                        <tr>
+                          <th>Currently Working here? </th>
+                          <td>{{experience.currentlyWorking}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+        </ba-card>
+        <ba-card title="Skills" baCardClass="with-scroll button-panel">
+          <tag-input [removable]='false' hideForm='true' theme='bootstrap' [ngModel]="skills" [identifyBy]="'id'" [displayBy]="'title'"
+            [editable]='false'>
+          </tag-input>
+        </ba-card>
+        <ba-card title="Contacts" baCardClass="with-scroll button-panel">
+          <h4>{{contact}}</h4>
+          <h4>{{email}}</h4>
+          <!-- <tag-input [removable]='false' hideForm='true' theme='bootstrap' [ngModel]="skills" [identifyBy]="'id'" [displayBy]="'title'"
+            [editable]='false'>
+          </tag-input> -->
+        </ba-card>
+      </ul>
+      <ba-card *ngIf="canRate" title="Rate Instructor" baCardClass="with-scroll button-panel">
+        <div class="form-group">
+          <ngb-rating [formControl]="ctrl"></ngb-rating>
+          <div class="set-margin">
+            <button [disabled]="saved" class="btn btn-success" (click)="toggle()">
+              {{ ctrl.disabled ? "Saved" : "Save" }}
+            </button>
+          </div>
+          <div class="form-text small">
+            <div *ngIf="rated"><p>Thanks for Rating!</p></div>
+            <!--  <div *ngIf="ctrl.invalid" class="text-danger">Please rate </div> -->
+          </div>
+        </div>
+      </ba-card>
+
+      <!-- <ba-card title="Instructor Rating" baCardClass="with-scroll button-panel">
+        
+      </ba-card> -->
+    </div>
+  </div>

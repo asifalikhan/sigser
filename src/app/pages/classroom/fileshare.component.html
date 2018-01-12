@@ -1,0 +1,235 @@
+<p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}"
+  [(value)]="msgs">
+
+</p-growl>
+
+<ng-template #rt let-r="result" let-t="term">
+  <div [style.width.px]="eltypeaheadTemplate.nativeElement.clientWidth - 40" style="margin-left: -15px">
+      <span style="float: right">  
+        <i [hidden]="isFriend(r.id)" class="fa fa-plus dropdown-icon" title="add to friends" (click)="addToFriendsList(r.id, r.name)" aria-hidden="true"></i>
+        <i [hidden]="!(isFriend(r.id))" class="fa fa-times dropdown-icon" title="unfriend" (click)="deleteFromFriends(r.id, r.name)" aria-hidden="true"></i>
+      </span>
+      <img src={{profile_pic_url}}{{r.profile_pic}} alt="avatar" style="height:35px;width:35px"/>
+      <h5 style="margin: 10px">{{r.firstName}} {{r.lastName}}<p style="font-size: x-small">{{r.email}}</p></h5>
+     
+  
+
+      <div></div>
+  </div>  
+
+  </ng-template>
+
+<div [hidden]="!mainView">
+
+  <ba-card>
+
+    <!-- <h1 style="text-align:center">{{course}}</h1> -->
+
+    <div class="people-list" id="people-list">
+        <div class="form-group search-on-web">
+            <span class="searching-value" *ngIf="searching">searching...</span> 
+          <input #typeheadtemplate type="text"  class="form-control" [(ngModel)]="model" [ngbTypeahead]="search" [inputFormatter]="formatter"
+             [class.is-invalid]="searchFailed" [resultTemplate]="rt" type="text" placeholder="find friends" />
+           
+            <div class="invalid-feedback" *ngIf="searchFailed">Sorry, suggestions could not be loaded.</div>
+          </div>
+      <div class="search">
+        <input class="fuzzy-search" type="text" placeholder="search user" />
+        <i class="fa fa-search"></i>
+      </div>
+      <div>
+
+      </div>
+
+      <ul #userListHTML class="list" *ngIf="isFriendsAvailable">
+
+        <li class="clearfix customhover" *ngFor="let user of userToPopulate; let i = index" [class.selected]="selectedIndex === i"
+          (click)="openChat(user, i)">
+          <i *ngIf="!hasProp(user, 'type')" class="fa fa-times dropdown-icon" title="unfriend" (click)="deleteFromFriends(user.id)" aria-hidden="true" style="float: right"></i>
+          <!-- <i *ngIf="hasProp(user, 'type')" class="fa fa-times dropdown-icon" title="Delete Group" (click)="deleteGroup(user)" aria-hidden="true" style="float: right"></i> -->
+          <img src={{profile_pic_url}}{{user.profile_pic}} alt="avatar" style="height:50px;width:50px" />
+          <div class="about">
+            <div class="name">{{user.firstName}} {{user.lastName}}</div>
+            <div class="status" *ngIf="user.status;">
+              <i class="fa fa-circle online"><p>online</p></i>
+            </div>
+            <div class="status" *ngIf="user.status==false;">
+              <i class="fa fa-circle offline"><p>offline</p></i>
+            </div>
+          </div>
+          <div id={{user.id}} class="notification" hidden>
+            0
+          </div>
+
+        </li>
+        <button title="Manage Groups" (click)="openGroupManageWindow()" class="manage-groups"><i class="fa fa-users"></i> Manage Groups</button>
+        <!-- <button title="Search people" (click)="searchPeople()" class="find-people"><i class="fa fa-user-plus" style="margin-right:4px" ></i>Fiend Friends</button> -->
+
+      </ul>
+
+    </div>
+
+    <audio #MessageTone type="audio/mpeg"></audio>
+    <audio #callTone type="audio/mpeg"></audio>
+    <ng-container #dynamicChatDiv>
+
+    </ng-container>
+
+    <ng-container #videoDiv class="chat">
+
+    </ng-container>
+
+  </ba-card>
+
+</div>
+
+
+<div>
+  <button (click)="backToManageView()" class="btn btn-primary"><i class="ion-arrow-left-c" style="margin-right:5px"></i>Back</button>
+  <br><br>
+</div>
+
+<div *ngIf="searchPeopleView" class="container2" id="tourpackages-carousel">
+
+
+  <div class="offset-sm-0 col-sm-12">
+    <button (click)="backToMain()" type="button" class="btn btn-primary"><i class="ion-arrow-left-c" style="margin-right:5px"></i>Back</button>
+    <!-- <button style="float:right" (click)="openCreateGroupView()" type="button" class="btn btn-success"><i class="ion-plus-round" style="margin-right:5px"></i>Create New Group</button> -->
+
+    <br>
+  </div>
+
+  <hr>
+
+  <div class="row">
+
+    <div class="col-sm-3" *ngFor="let group of groups; let i = index">
+
+      <div class="thumbnail" style="margin-left:30px">
+        <h4 style="word-wrap: break-word;">{{group.groupName}}</h4>
+        <div class="caption">
+
+          <div class="status" style="display: grid;">
+            <i style="display: inline-flex;" class="fa fa-circle online" *ngFor="let user of group.users"><p style="color:white;margin-left: 10px;">{{user.firstName}} {{user.lastName}}</p></i>
+          </div>
+
+          <i title="Edit" (click)="editGroup(group)" class="group-edit-btn ion-edit"></i>
+          <i title="Delete" (click)="deleteGroup(group)" class="group-edit-btn ion-trash-a"></i>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+</div>
+
+
+<div *ngIf="manageGroupView" class="container2" id="tourpackages-carousel">
+
+
+  <div class="offset-sm-0 col-sm-12">
+    <button (click)="backToMain()" type="button" class="btn btn-primary"><i class="ion-arrow-left-c" style="margin-right:5px"></i>Back</button>
+    <button style="float:right" (click)="openCreateGroupView()" type="button" class="btn btn-success"><i class="ion-plus-round" style="margin-right:5px"></i>Create New Group</button>
+
+    <br>
+  </div>
+
+  <hr>
+  <div class="offset-sm-0 col-sm-4" *ngIf="groups.length === 0">
+    <h4>There is no group please create one.</h4>
+
+  </div>
+  <div class="row">
+
+    <div class="col-sm-3" *ngFor="let group of groups; let i = index">
+
+      <div class="thumbnail" style="margin-left:30px">
+        <h4 style="word-wrap: break-word;">{{group.groupName}}</h4>
+        <div class="caption">
+
+          <div class="status" style="display: grid;">
+            <i style="display: inline-flex;" class="fa fa-circle online" *ngFor="let user of group.users"><p style="color:white;margin-left: 10px;">{{user.firstName}} {{user.lastName}}</p></i>
+          </div>
+          <!-- <div class="status" *ngIf="course.status==false;">
+            <i class="fa fa-circle offline"></i>offline
+          </div><br> -->
+          <!-- <p><a *ngIf="userType == 'instructor'" (click)="joinClass(course)" class="btn btn-success" role="button">Start Class</a>
+            <button [disabled]="course.status==false" *ngIf="userType == 'student'" (click)="joinClass(course)" class="btn btn-success"
+              role="button">Join Class</button></p> -->
+          <!-- <i title="Edit" (click)="editGroup(group)" class="group-edit-btn ion-edit"></i> -->
+          <i *ngIf="currentLogedInUser.id === group.groupOwnerId" title="Delete" (click)="deleteGroup(group)" class="group-edit-btn ion-trash-a"></i>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+</div>
+
+
+<div *ngIf="createGroupView" class="form-group row">
+
+  <br>
+  <ba-card class="offset-sm-1 col-sm-9">
+    <form [formGroup]="groupsForm" (ngSubmit)="createGroup(groupsForm.value)" class="form-horizontal">
+
+      <div class="form-group row" [ngClass]="{'has-error': (!groupName.valid && groupName.touched), 'has-success': (groupName.valid && groupName.touched)}">
+        <label for="groupName" class="col-sm-2 control-label">Group Name</label>
+
+        <div class="col-sm-10">
+          <input [formControl]="groupName" type="text" class="form-control" id="groupName" placeholder="Group Name">
+
+          <div *ngIf="groupName.errors && (groupName.dirty || groupName.touched)" class="alert alert-danger">
+            <div [hidden]="!groupName.errors.required">
+              Group name is required!
+            </div>
+            <div [hidden]="!groupName.errors.minlength">
+              Name must be at least 4 characters long.
+            </div>
+            <!-- <div [hidden]="!title.errors.maxlength">
+              Title cannot be more than 30 characters long.
+            </div> -->
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 control-label">Drag to create group</label>
+        <div class="col-sm-5">
+          <ba-card>
+            <div droppable (onDrop)="addToAllUsers($event)" style="overflow-y: scroll; height: 200px;" title="All Users">
+              <p>All Users</p>
+              <ul class="list-group">
+                <li draggable *ngFor="let user of currentUserFriends" [dragData]="user" class="list-group-item">{{user.firstName}} {{user.lastName}}</li>
+              </ul>
+            </div>
+          </ba-card>
+        </div>
+        <div class="col-sm-5">
+          <ba-card>
+            <div class="panel panel-default" droppable (onDrop)="addToNewGroup($event)" style="overflow-y: scroll; height: 200px;" title="New Group">
+              <div class="panel-body" data-text="Enter text here">
+                <p>New Group</p>
+                <li draggable *ngFor="let user of newGroupUsers" [dragData]="user" class="list-group-item">{{user.firstName}} {{user.lastName}}</li>
+              </div>
+            </div>
+          </ba-card>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="offset-sm-9">
+          <button (click)="backToManageView()" type="button" class="btn btn-primary"><i class="ion-arrow-left-c" style="margin-right:5px"></i>Back</button>
+          <!-- <button (click)="clearForm()" type="button" class="btn btn-success"><i class="ion-ios-refresh" style="margin-right:5px"></i>Clear</button> -->
+          <button [disabled]="!groupsForm.valid" type="submit" class="btn btn-success"><i class="ion-plus-round" style="margin-right:5px"></i>Create/Update</button>
+        </div>
+      </div>
+
+    </form>
+  </ba-card>
+</div>

@@ -1,0 +1,212 @@
+@import '../../../../theme/sass/auth';
+@import "../../../../theme/sass/conf/conf";
+
+@import "../../../../services/alert";
+@import "../../../../services/loading";
+
+////////////////////
+.twPc-div {
+  background: #fff none repeat scroll 0 0;
+  border: 1px solid #e1e8ed;
+  border-radius: 6px;
+  height: 200px;
+  max-width: 340px; // orginal twitter width: 290px;
+}
+.twPc-divStats {
+  margin-left: 11px;
+  padding: 100px 0;
+}
+.twPc-Arrange {
+  box-sizing: border-box;
+  display: table;
+  margin: 0;
+ //margin-top: 100px;
+  min-width: 100%;
+  padding: 0;
+  table-layout: auto;
+}
+ul.twPc-Arrange {
+  list-style: outside none none;
+  margin: 0;
+  margin-top: 60px;
+  padding: 0;
+}
+.twPc-ArrangeSizeFit {
+  display: table-cell;
+  padding: 0;
+  vertical-align: top;
+}
+.twPc-ArrangeSizeFit a:hover {
+  text-decoration: none;
+}
+.twPc-StatValue {
+  display: block;
+  font-size: 18px;
+  font-weight: 500;
+  transition: color 0.15s ease-in-out 0s;
+}
+.twPc-StatLabel {
+  color: #34CE5B;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  text-transform: uppercase;
+  transition: color 0.15s ease-in-out 0s;
+}
+///////////////////////////////
+//////panel css///
+.row{
+  margin-top:40px;
+  padding: 0 10px;
+}
+
+.clickable{
+  cursor: pointer;   
+}
+
+.panel-heading span {
+margin-top: -20px;
+font-size: 15px;
+}
+//////end/////
+
+
+
+
+   body
+   {
+       font-family: 'Open Sans', sans-serif;
+   }
+   
+   .fb-profile img.fb-image-lg{
+       z-index: 0;
+       width: 100%;  
+       height: 400px;
+       margin-bottom: 10px;
+       border-bottom-color: rebeccapurple;
+       border-top-left-radius: 10px;
+       border-top-right-radius: 10px;
+   }
+   .twPc-divStats {
+    margin-left: 11px;
+    padding: 10px 0;
+}
+   
+   .fb-image-profile
+   {
+       margin: -14px 40px 0px 10px;
+       z-index: 9;
+       width: 20%; 
+       border-color: #FFFFFF;
+       border-width: 20px;
+       border-radius: 50%;
+       height: 175px;
+       width: 175px;
+       
+       
+   }
+   
+   @media (max-width:768px)
+   {
+       
+   .fb-profile-text>h1{
+       /* font-weight: 700;
+       font-size:16px; */
+       margin-top: 500px;
+   }
+   
+   .fb-image-profile
+   {
+       margin: -45px 10px 0px 05px;
+       z-index: 9;
+       width: 20%; 
+   }
+   }
+
+:host /deep/ .widgets {
+  .smart-table-container {
+    width: 100%;
+  }
+}
+.set-margin{
+
+  //margin-right: 20px;
+  margin-top: 20px;
+}
+
+:host /deep/ {
+  ng2-smart-table {
+    th, td {
+      border: 1px solid $border-light !important;
+      line-height: 35px;
+      vertical-align: middle;
+    }
+
+    table tr td {
+      padding: 0 8px;
+    }
+
+    color: $default-text;
+
+    input {
+      line-height: 1.5 !important;
+    }
+
+    ng2-smart-table-cell {
+      color: $default-text;
+      line-height: 35px;
+    }
+
+    tbody {
+      tr {
+        color: $default-text;
+      }
+      tr:hover {
+        background: rgba(0, 0, 0, 0.03);
+      }
+    }
+
+    a.ng2-smart-sort-link {
+      font-size: 14px !important;
+      color: $default-text;
+      font-weight: $font-bolder;
+      &.sort {
+        font-weight: $font-bolder !important;
+
+        &::after {
+          border-bottom-color: $default-text !important;
+        }
+      }
+    }
+
+    .ng2-smart-actions {
+      width: 70px;
+      text-align: center;
+      .actions {
+        float: none;
+        text-align: center;
+      }
+    }
+
+    .ng2-smart-actions-title-add {
+      text-align: center;
+    }
+
+    a.ng2-smart-action, .ng2-smart-title {
+      font-size: 14px !important;
+      color: $default-text;
+      padding: 0 5px;
+      display: inline-block;
+
+      &.ng2-smart-action-add-add {
+        font-size: 25px !important;
+      }
+    }
+
+    nav.ng2-smart-pagination-nav {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+

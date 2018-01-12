@@ -1,0 +1,25 @@
+
+<ba-full-calendar [baFullCalendarConfiguration]="calendarConfiguration" baFullCalendarClass="blurCalendar"  (onCalendarReady)="onCalendarReady($event)"></ba-full-calendar>
+
+
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="title" style="color:antiquewhite">&nbsp;{{courseTitle}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{date}}</h4>
+        </div>
+        <div class="modal-body">
+          <div>
+            <div class="widgets">
+              <div class="row">
+                <div class="smart-table-container">
+                  <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

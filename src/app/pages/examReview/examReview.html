@@ -1,0 +1,202 @@
+<button (click)="back()" class="btn btn-default btn-auth"><i class="ion-arrow-left-c"></i>&nbsp; Back&nbsp; </button>
+<br><br>
+<p-growl class="growl" [ngClass]="{'ui-growl-message-info':msgs.severity == 'info','ui-growl-message-error':msgs.severity == 'error','ui-growl-message-success':msgs.severity == 'success'}"
+  [(value)]="msgs"></p-growl>
+
+
+<form [formGroup]="updateForm" class="form-horizontal" (ngSubmit)="onQuizUpdate(updateForm.value)">
+  <div class="form-group row" [ngClass]="{'has-error': (!examTitle.valid && examTitle.touched), 'has-success': (examTitle.valid && examTitle.touched)}">
+    <label for="inputexamTitle" class="col-sm-3 control-label">Title </label>
+
+    <div class="col-sm-9">
+      <input [formControl]="examTitle" type="text" class="form-control" id="inputName" placeholder="Quiz Title">
+    </div>
+  </div>
+  <div class="form-group row" [ngClass]="{'has-error': (!examDiscription.valid && examDiscription.touched), 'has-success': (examDiscription.valid && examDiscription.touched)}">
+    <label for="inputexamDiscription" class="col-sm-3 control-label">Discription </label>
+
+    <div class="col-sm-9">
+      <textarea [formControl]="examDiscription" type="text" class="form-control" id="inputName" placeholder="Quiz Discription"></textarea>
+    </div>
+  </div>
+  <div class="form-group row" [ngClass]="{'has-error': (!examInstructions.valid && examInstructions.touched), 'has-success': (examInstructions.valid && examInstructions.touched)}">
+    <label for="inputexamInstructions" class="col-sm-3 control-label">Instructions</label>
+
+    <div class="col-sm-9">
+      <textarea [formControl]="examInstructions" type="text" class="form-control" id="inputName" placeholder="Quiz Instructions"></textarea>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="inputtotalMarks" class="col-sm-3 control-label">Marks </label>
+
+    <div class="col-sm-9">
+      <input [formControl]="totalMarks" type="number" class="form-control" id="inputName" placeholder="Quiz Marks">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="inputtotalTime" class="col-sm-3 control-label">Time </label>
+
+    <div class="col-sm-9">
+      <input [formControl]="totalTime" type="number" class="form-control" id="inputName" placeholder="Time in munutes">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="offset-sm-3 col-sm-9">
+      <button [disabled]="!updateForm.valid" type="submit" class="btn btn-success">Update</button>
+    </div>
+  </div>
+</form>
+
+<ba-card *ngFor="let question of questions">
+  <div>
+    <!-- <button (click)="setQuestion(question)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            <i class="ion-edit"></i></button> -->
+
+    <button (click)="deleteQuestion(question)" style="float:right;" type="button" class="btn btn-danger">
+            <i class="ion-trash-a"></i></button>
+    <button (click)="setQuestion2(question)" style="float:right;" type="button" class="btn btn-primary">
+                <i class="ion-edit"></i></button>
+    <br><br>
+  </div>
+  <h2>Question</h2>
+  <div *ngIf="qEdit && id == question.id">
+    <input [(ngModel)]="question.qMarks" type="number" class="form-control" placeholder="marks here">
+    <textarea [(ngModel)]="question.title" type="text" class="form-control" placeholder="question here"></textarea>
+    <div class="row" *ngFor="let answer of question.answers">
+      <div class="col-sm-8">
+        <input [(ngModel)]="answer.title" type="text" class="form-control" placeholder="option here">
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" value="true" [(ngModel)]="answer.isCorrect">
+      </div>
+    </div>
+    <button class="btn btn-primary" (click)="updateQuestion(question)" style="float:right">Update</button>
+  </div>
+  <div *ngIf="!qEdit || id != question.id">
+    <button class="btn btn-default" style="float:right;border-color:transparent">Marks:{{question.qMarks}}</button>
+    <p>{{question.title}}</p>
+    <div *ngFor="let answer of question.answers">
+      <p><i *ngIf="answer.isCorrect" style="margin-right:20px" class="ion-checkmark"></i><i *ngIf="!answer.isCorrect" style="margin-right:20px"
+          class="ion-close"></i> {{answer.title}}
+      </p>
+    </div>
+  </div>
+
+</ba-card>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="title">Add Question</h4>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="questionform" class="form-horizontal" (ngSubmit)="setQuestion(questionform.value)">
+
+          <div class="form-group row" [ngClass]="{'has-error': (!question.valid && question.touched), 'has-success': (question.valid && question.touched)}">
+            
+            <div class="col-sm-12">
+              <textarea formControlName="question" type="text" class="form-control" placeholder="Question here"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group row" [ngClass]="{'has-error': (!qMarks.valid && qMarks.touched), 'has-success': (qMarks.valid && qMarks.touched)}">
+          
+            <div class="col-sm-12">
+              <input formControlName="qMarks" type="number" class="form-control" placeholder="Question Marks">
+            </div>
+          </div>
+
+            <div class="row"> 
+                <div class="col-sm-8">
+    
+                  <div class="col-sm-12">
+                    <div class="form-group row" [ngClass]="{'has-error': (!option1.valid && option1.touched), 'has-success': (option1.valid && option1.touched)}">
+                      <div class="col-sm-12">
+                        <input [formControl]="option1" type="text" class="form-control" id="inputoption1" placeholder="option1">
+                      </div>
+                    </div>
+                  </div>
+    
+                  <div class="col-sm-12">
+                    <div class="form-group row" [ngClass]="{'has-error': (!option2.valid && option2.touched), 'has-success': (option2.valid && option2.touched)}">
+                      <div class="col-sm-12">
+                        <input [formControl]="option2" type="text" class="form-control" id="inputoption2" placeholder="option2">
+                      </div>
+                    </div>
+                  </div>
+    
+                  <div class="col-sm-12">
+                    <div class="form-group row" [ngClass]="{'has-error': (!option3.valid && option3.touched), 'has-success': (option3.valid && option3.touched)}">
+                      <div class="col-sm-12">
+                        <input [formControl]="option3" type="text" class="form-control" id="inputoption3" placeholder="option3">
+                      </div>
+                    </div>
+                  </div>
+    
+                  <div class="col-sm-12">
+                    <div class="form-group row" [ngClass]="{'has-error': (!option4.valid && option4.touched), 'has-success': (option4.valid && option4.touched)}">
+                      <div class="col-sm-12">
+                        <input [formControl]="option4" type="text" class="form-control" id="inputoption4" placeholder="option4">
+                      </div>
+                    </div>
+                  </div>
+                </div>    
+              
+    
+                <div class="col-sm-4">
+                    
+                  <div class="form-group row">
+                    <div class="offset-sm-0 col-sm-9">
+                      <label class="radio-inline custom-radio nowrap">
+                        <input type="checkbox" formControlName="opt1IsTrue" name="trueOpt"  id="checkbox" value="true">
+                        <span>True Answer</span>
+                      </label>
+                    </div>
+                  </div>
+    
+                  <div class="form-group row">
+                    <div class="offset-sm-0 col-sm-9">
+                      <label class="radio-inline custom-radio nowrap">
+                         <input type="checkbox" formControlName="opt2IsTrue" name="trueOpt" id="checkbox" value="true">
+                         <span>True Answer</span>
+                      </label>
+                    </div>
+                  </div>
+    
+    
+                    <div class="form-group row">
+                      <div class="offset-sm-0 col-sm-9">
+                            <label class="radio-inline custom-radio nowrap">
+                              <input type="checkbox" formControlName="opt3IsTrue" name="trueOpt" id="checkbox" value="true">
+                              <span>True Answer</span>
+                            </label>
+                      </div>
+                    </div>
+    
+                    <div class="form-group row">
+                      <div class="offset-sm-0 col-sm-9">
+                          <label class="radio-inline custom-radio nowrap">
+                            <input type="checkbox" formControlName="opt4IsTrue" name="trueOpt" id="checkbox" value="true">
+                            <span>True Answer</span>
+                          </label>
+                      </div>
+                    </div>
+                </div>
+              </div>
+
+          <div class="modal-footer">
+            <button [disabled]="!questionform.valid" type="submit" class="btn btn-default btn-auth">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            <i class="fa fa-plus"></i>&nbsp;Add Question</button>

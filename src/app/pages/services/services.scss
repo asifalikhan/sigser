@@ -1,0 +1,210 @@
+@import '../../theme/sass/auth';
+@import "../../theme/sass/conf/conf";
+@import "../../services/alert";
+
+:host /deep/ .widgets {
+  .smart-table-container {
+    width: 100%;
+  }
+}
+
+:host /deep/ {
+  ng2-smart-table {
+    th, td {
+      border: 1px solid $border-light !important;
+      line-height: 35px;
+      vertical-align: middle;
+    }
+
+    table tr td {
+      padding: 0 8px;
+    }
+
+    color: $default-text;
+
+    input {
+      line-height: 1.5 !important;
+    }
+
+    ng2-smart-table-cell {
+      color: $default-text;
+      line-height: 35px;
+    }
+
+    tbody {
+      tr {
+        color: $default-text;
+      }
+      tr:hover {
+        background: rgba(0, 0, 0, 0.03);
+      }
+    }
+
+    a.ng2-smart-sort-link {
+      font-size: 14px !important;
+      color: $default-text;
+      font-weight: $font-bolder;
+      &.sort {
+        font-weight: $font-bolder !important;
+
+        &::after {
+          border-bottom-color: $default-text !important;
+        }
+      }
+    }
+
+    .ng2-smart-actions {
+      width: 70px;
+      text-align: center;
+      .actions {
+        float: none;
+        text-align: center;
+      }
+    }
+
+    .ng2-smart-actions-title-add {
+      text-align: center;
+    }
+
+    a.ng2-smart-action, .ng2-smart-title {
+      font-size: 14px !important;
+      color: $default-text;
+      padding: 0 5px;
+      display: inline-block;
+
+      &.ng2-smart-action-add-add {
+        font-size: 25px !important;
+      }
+    }
+
+    nav.ng2-smart-pagination-nav {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+.modal-content{
+ // background-color: cornflowerblue;
+ background-image: url(/assets/img/blur-bg.jpg);
+}
+
+:host /deep/ .widgets {
+    .data-table-container {
+        width: 100%;
+        .panel-heading {
+            margin-top: 25px;
+        }
+    }
+}
+
+:host /deep/ .tabl{
+
+.ui-datatable table {
+	border-collapse:collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.ui-datatable .ui-datatable-header,
+.ui-datatable .ui-datatable-caption,
+.ui-datatable .ui-datatable-footer {
+    text-align: center;
+    padding: 4px 10px;
+    box-sizing: border-box;
+}
+
+.ui-datatable .ui-datatable-caption,
+.ui-datatable .ui-datatable-header {
+    border-bottom: 0px none;
+}
+
+.ui-datatable .ui-datatable-footer {
+    border-top: 0px none;
+}
+
+.ui-datatable thead th, .ui-datatable tfoot td {
+    text-align: center;
+}
+
+.ui-datatable thead th,
+.ui-datatable tbody td,
+.ui-datatable tfoot td,
+.ui-datatable tfoot th{
+    padding: 4px 10px;
+    overflow: hidden;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.ui-datatable thead tr {
+    border-width: 0px;
+}
+
+.ui-datatable thead th {
+    border-color: inherit;
+    box-sizing: border-box;
+}
+
+.ui-datatable tbody {
+    outline: 0;
+}
+
+.ui-datatable tbody td {
+    border-color: inherit;
+}
+
+.ui-datatable .ui-sortable-column {
+    cursor: pointer;
+}
+
+.ui-datatable .ui-sortable-column-icon {
+    display: inline-block;
+    margin: -3px 0px -3px 2px;
+}
+
+.ui-datatable tr.ui-state-highlight {
+    cursor: pointer;
+}
+
+/** TabMenu **/
+.ui-tabmenu { 
+
+}
+
+.ui-tabmenu .ui-tabmenu-nav { 
+    margin: 0;
+    padding: .25em .5em 0 .25em; 
+}
+
+.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem { 
+    list-style: none; 
+    float: left; 
+    position: relative; 
+    margin: 0 .2em 1px 0;  
+    padding: 0; 
+    white-space: nowrap;
+    display: block;
+    border-bottom: 0;
+    top: 1px; 
+}
+
+.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a { 
+    float: left; 
+    padding: 0.5em 1em;
+    text-decoration: none; 
+}
+
+.ui-tabmenu .ui-tabmenu-nav a { 
+    padding: 0.5em 1em;
+}
+
+.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem .ui-icon { 
+    float: left; 
+}
+
+.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem.ui-state-disabled a {
+     cursor: default;
+} 
+}
+
